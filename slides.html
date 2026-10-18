@@ -6,8 +6,8 @@
 <title>מערכת העיכול: מצגת</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700;800&display=swap">
-<link rel="stylesheet" href="assets/farm.css?v=202610182134">
-<link rel="stylesheet" href="assets/digest.css?v=202610182134">
+<link rel="stylesheet" href="assets/farm.css?v=202610182150">
+<link rel="stylesheet" href="assets/digest.css?v=202610182150">
 <style>
 body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 .deck{height:100vh;height:100dvh;display:flex;flex-direction:column}
@@ -57,7 +57,7 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 .slide .dg{max-height:60vh}
 .dg .lbl{font-size:15px}
 /* הנפשות */
-.anim{width:100%;height:auto;display:block;max-height:52vh}
+.anim{width:100%;height:auto;display:block;max-height:52vh;direction:ltr}
 .anim text{font-family:var(--f-body);font-weight:800;fill:var(--ink)}
 @keyframes splitA{0%,25%{transform:translate(0,0)}55%,100%{transform:translate(var(--dx),var(--dy))}}
 .cubes rect{animation:splitA 4s ease-in-out infinite;fill:#e3c06a;stroke:#a8862a;stroke-width:2}
@@ -87,12 +87,24 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 @keyframes grassGone{0%,20%{opacity:1}70%,100%{opacity:.15}}
 .glc{fill:#f6d77a;stroke:#b28a1d;stroke-width:1.5;animation:glcPop 6s ease-in-out infinite}
 @keyframes glcPop{0%,25%{opacity:0;transform:scale(.4)}40%,70%{opacity:1;transform:scale(1)}85%,100%{opacity:0}}
+.acid{animation:acidIn 5s ease-in-out infinite}
+@keyframes acidIn{0%{transform:translateX(0);opacity:1}45%{transform:translateX(110px);opacity:1}60%,100%{transform:translateX(110px);opacity:0}}
+.bicarb{animation:bicIn 5s ease-in-out infinite}
+@keyframes bicIn{0%{transform:translate(0,0);opacity:1}45%{transform:translate(-80px,80px);opacity:1}60%,100%{transform:translate(-80px,80px);opacity:0}}
+.phbar{animation:phGo 5s ease-in-out infinite;transform-box:fill-box;transform-origin:right}
+@keyframes phGo{0%,30%{fill:#e74c3c;transform:scaleX(.25)}60%,100%{fill:#7fae5a;transform:scaleX(.6)}}
+.phA{animation:phTa 5s infinite}.phB{animation:phTb 5s infinite}
+@keyframes phTa{0%,45%{opacity:1}55%,100%{opacity:0}}@keyframes phTb{0%,45%{opacity:0}55%,100%{opacity:1}}
+.beads.pr rect{fill:#e58a7c;stroke:#a85a45;stroke-width:2;animation:beadOff 4s ease-in-out infinite}
+.fatsm{fill:#f2c94c;stroke:#c9a21a;stroke-width:1.5;animation:fatSm 4s ease-in-out infinite}
+@keyframes fatSm{0%,30%{transform:scale(1);opacity:1}70%,100%{transform:scale(.45);opacity:.6}}
+.fatsm{transform-box:fill-box;transform-origin:center}
 @media (prefers-reduced-motion:reduce){.slide.on,.f{animation:none;transition:none}.anim *{animation:none!important}}
 </style>
 </head>
 <body>
 <div class="deck">
-  <div class="top"><a class="linkbtn" href="https://hagit2303.github.io/haklaut/?v=202610182134" style="text-decoration:none">🏠 דף הבית</a><span class="brand">🌾 מערכת העיכול · מצגת</span><a class="linkbtn" href="index.html?v=202610182134">→ לדף היחידה</a><a class="linkbtn" href="sim.html?v=202610182134">🔍 לסימולציה</a></div>
+  <div class="top"><a class="linkbtn" href="https://hagit2303.github.io/haklaut/?v=202610182150" style="text-decoration:none">🏠 דף הבית</a><span class="brand">🌾 מערכת העיכול · מצגת</span><a class="linkbtn" href="index.html?v=202610182150">→ לדף היחידה</a><a class="linkbtn" href="sim.html?v=202610182150">🔍 לסימולציה</a></div>
   <div class="prog"><i id="bar"></i></div>
   <div class="slides" id="slides">
 
@@ -105,7 +117,7 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
       <p style="font-size:1.25em">מערכת העיכול באדם, בעוף ובפרה</p>
       <div class="note f">🤫 <b>החידה מ"התזונאי של הרפת":</b> פרה חיה ומייצרת חלב ממזון כמו קש ושחת, שאדם אינו מפיק ממנו אנרגיה. איך?</div>
     </div>
-    <figure class="photo"><img src="assets/img/cows-chewing-cud.jpg?v=202610182134" alt="פרות שרועות בשדה ומעלות גירה"><figcaption>פרות מעלות גירה<span class="cr">צילום: Neil Owen · <a href="https://commons.wikimedia.org/wiki/File:Cows_chewing_the_cud_near_Puriton_-_geograph.org.uk_-_6138906.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 2.0</span></figcaption></figure>
+    <figure class="photo"><img src="assets/img/cows-chewing-cud.jpg?v=202610182150" alt="פרות שרועות בשדה ומעלות גירה"><figcaption>פרות מעלות גירה<span class="cr">צילום: Neil Owen · <a href="https://commons.wikimedia.org/wiki/File:Cows_chewing_the_cud_near_Puriton_-_geograph.org.uk_-_6138906.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 2.0</span></figcaption></figure>
   </div>
 </section>
 
@@ -167,7 +179,7 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 <section class="slide">
   <h2><span class="eartag"><span>4</span></span>מערכת העיכול באדם</h2>
   <div class="split">
-    <figure class="photo"><img src="assets/img/human-digestive-he.png?v=202610182134" alt="איור של מערכת העיכול באדם עם שמות בעברית"><figcaption>מערכת העיכול באדם<span class="cr">איור: Mariana Ruiz, תרגום לעברית · <a href="https://commons.wikimedia.org/wiki/File:Digestive_system_diagram.png" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 3.0</span></figcaption></figure>
+    <figure class="photo"><img src="assets/img/human-digestive-he.png?v=202610182150" alt="איור של מערכת העיכול באדם עם שמות בעברית"><figcaption>מערכת העיכול באדם<span class="cr">איור: Mariana Ruiz, תרגום לעברית · <a href="https://commons.wikimedia.org/wiki/File:Digestive_system_diagram.png" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 3.0</span></figcaption></figure>
     <div>
       <p class="f"><b>צינור העיכול</b> (המזון עובר בו):<br>פה ← ושט ← קיבה ← תריסריון ← מעי דק ← מעי גס ← פי הטבעת</p>
       <p class="f"><b>איברים נלווים</b>: המזון אינו עובר בהם, והם מפרישים לצינור העיכול:</p>
@@ -197,8 +209,8 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 <section class="slide">
   <h2><span class="eartag"><span>6</span></span>שיניים: מבנה ותפקוד</h2>
   <div class="pair">
-    <figure class="photo"><img src="assets/img/dog-skull.jpg?v=202610182134" alt="גולגולת של כלב עם ניבים גדולים"><figcaption>🐕 טורף (כלב): ניבים גדולים וחדים<span class="cr">צילום: Wagner Souza e Silva · <a href="https://commons.wikimedia.org/wiki/File:Dog_skull._Canis_lupus_familiaris_01.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 4.0</span></figcaption></figure>
-    <figure class="photo"><img src="assets/img/cow-skull.jpg?v=202610182134" alt="גולגולת של פרה, בלי שיניים חותכות בלסת העליונה"><figcaption>🐄 אוכלת צמחים (פרה): אין חותכות עליונות, טוחנות רחבות<span class="cr">צילום: James St. John · <a href="https://commons.wikimedia.org/wiki/File:Bos_sp._(cow)_cranium_4_(46935058024).jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY 2.0</span></figcaption></figure>
+    <figure class="photo"><img src="assets/img/dog-skull.jpg?v=202610182150" alt="גולגולת של כלב עם ניבים גדולים"><figcaption>🐕 טורף (כלב): ניבים גדולים וחדים<span class="cr">צילום: Wagner Souza e Silva · <a href="https://commons.wikimedia.org/wiki/File:Dog_skull._Canis_lupus_familiaris_01.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 4.0</span></figcaption></figure>
+    <figure class="photo"><img src="assets/img/cow-skull.jpg?v=202610182150" alt="גולגולת של פרה, בלי שיניים חותכות בלסת העליונה"><figcaption>🐄 אוכלת צמחים (פרה): אין חותכות עליונות, טוחנות רחבות<span class="cr">צילום: James St. John · <a href="https://commons.wikimedia.org/wiki/File:Bos_sp._(cow)_cranium_4_(46935058024).jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY 2.0</span></figcaption></figure>
   </div>
   <p class="f">🦷 <b>חותכות</b>: חיתוך · <b>ניבים</b>: קריעה · <b>טוחנות</b>: טחינה</p>
 </section>
@@ -214,11 +226,103 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
   <p class="note f">🤔 מזון עתיר שומן, אלכוהול ועישון מחלישים את הסוגר שבין הוושט לקיבה. מה עלול לקרות? (רמז: צרבת)</p>
 </section>
 
-<!-- 9 -->
+<!-- 9a: התריסריון -->
 <section class="slide">
-  <h2><span class="eartag"><span>8</span></span>התריסריון: הלבלב, הכבד והמרה</h2>
-  <p class="note"><b>בתריסריון מתפרקים פחמימות, חלבונים ושומנים.</b></p>
+  <h2><span class="eartag"><span>8</span></span>התריסריון</h2>
   <div class="split">
+    <div class="photo" id="figDuo"></div>
+    <div>
+      <p class="f"><b>התריסריון</b> הוא החלק הראשון של המעי הדק. אורכו כרוחב <b>12 אצבעות</b> (תריסר), ומכאן שמו.</p>
+      <p class="f">בתריסריון מתפרקים <b>פחמימות, חלבונים ושומנים</b>. הפירוק מסתיים במעי הדק, ביחידות המבנה:</p>
+      <div class="tbl f"><table>
+        <tr><th>רכיב המזון</th><th>יחידת המבנה</th></tr>
+        <tr><td>🍞 פחמימות (עמילן)</td><td>חד־סוכרים (גלוקוז)</td></tr>
+        <tr><td>🥩 חלבונים</td><td>חומצות אמינו</td></tr>
+        <tr><td>🧈 שומנים</td><td>חומצות שומן וגליצרול</td></tr>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9b: מה מופרש לתריסריון -->
+<section class="slide">
+  <h2><span class="eartag"><span>9</span></span>מה מופרש לתריסריון?</h2>
+  <div class="split">
+    <div class="photo">
+      <svg class="anim" viewBox="0 0 360 270" role="img" aria-label="הנפשה: מיץ לבלב ומרה זורמים בצינורות אל התריסריון">
+        <path id="pLiver" d="M20 30 Q110 0 215 22 Q228 40 210 58 Q150 92 40 92 Q12 70 20 30 Z" fill="#9c5b3c"/>
+        <text x="100" y="52" fill="#fff" font-size="20" text-anchor="middle" style="fill:#fff">כבד</text>
+        <ellipse cx="128" cy="112" rx="15" ry="20" fill="#7fae5a"/>
+        <path id="ductBile" d="M170 70 L176 150 L186 178" fill="none" stroke="#5f8f3e" stroke-width="5"/>
+        <path d="M134 128 Q150 140 175 140" fill="none" stroke="#5f8f3e" stroke-width="4"/>
+        <path d="M262 108 Q166 98 160 178 Q166 250 262 246" fill="none" stroke="#e7a58f" stroke-width="30" stroke-linecap="round"/>
+        <path d="M212 160 Q262 150 344 170 Q350 184 340 192 Q270 200 214 196 Z" fill="#e3c06a" stroke="#a8862a" stroke-width="1.5"/>
+        <path id="ductPanc" d="M335 180 Q260 178 188 180" fill="none" stroke="#a8862a" stroke-width="3" stroke-dasharray="2 3"/>
+        <circle r="6" fill="#3f7a2a"><animateMotion dur="3s" repeatCount="indefinite" path="M170 70 L176 150 L186 178"/></circle>
+        <circle r="6" fill="#3f7a2a"><animateMotion dur="3s" begin="1.5s" repeatCount="indefinite" path="M134 128 Q150 140 175 140 L186 178"/></circle>
+        <circle r="6" fill="#c9a21a" stroke="#7a5c00"><animateMotion dur="3s" repeatCount="indefinite" path="M335 180 Q260 178 188 180"/></circle>
+        <circle r="6" fill="#c9a21a" stroke="#7a5c00"><animateMotion dur="3s" begin="1.5s" repeatCount="indefinite" path="M335 180 Q260 178 188 180"/></circle>
+        <circle r="9" fill="#7a4a2a" stroke="#fff" stroke-width="2"><animateMotion dur="5s" repeatCount="indefinite" path="M262 108 Q166 98 160 178 Q166 250 262 246"/></circle>
+        <text x="96" y="120" font-size="14" text-anchor="end">כיס המרה</text>
+        <text x="300" y="215" font-size="16" text-anchor="middle">לבלב</text>
+        <text x="120" y="200" font-size="16" text-anchor="middle">תריסריון</text>
+        <text x="300" y="100" font-size="13" text-anchor="middle">← מהקיבה</text>
+        <text x="300" y="262" font-size="13" text-anchor="middle">← למעי הדק</text>
+        <text x="215" y="134" font-size="13" fill="#3f7a2a" style="fill:#3f7a2a">● מרה</text>
+        <text x="300" y="155" font-size="13" fill="#7a5c00" style="fill:#7a5c00">● מיץ לבלב</text>
+      </svg>
+    </div>
+    <div>
+      <p class="f">לתריסריון <b>מופרשים</b> שני מיצים, בצינורות:</p>
+      <p class="f">1️⃣ <b>מיץ הלבלב</b>: מהלבלב.</p>
+      <p class="f">2️⃣ <b>מרה</b>: מהכבד ומכיס המרה.</p>
+      <p class="note f">הלבלב, הכבד וכיס המרה הם <b>איברים נלווים</b>: המזון אינו עובר בהם.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9c: מיץ הלבלב -->
+<section class="slide">
+  <h2><span class="eartag"><span>10</span></span>מיץ הלבלב: שני תפקידים</h2>
+  <div class="pair">
+    <div class="photo f">
+      <p style="text-align:center;margin:0"><b>1. סתירת החומציות</b></p>
+      <svg class="anim" viewBox="0 0 320 210" role="img" aria-label="הנפשה: ביקרבונט מהלבלב סותר את החומצה שהגיעה מהקיבה">
+        <rect x="10" y="70" width="300" height="80" rx="40" fill="#f6d8cf" stroke="#a85a45" stroke-width="2"/>
+        <g class="acid"><text x="30" y="105" font-size="18" style="fill:#c0392b">H⁺</text><text x="40" y="132" font-size="18" style="fill:#c0392b">H⁺</text><text x="20" y="120" font-size="18" style="fill:#c0392b">H⁺</text></g>
+        <g class="bicarb"><text x="200" y="40" font-size="16" style="fill:#2457c5">HCO₃⁻</text><text x="240" y="30" font-size="16" style="fill:#2457c5">HCO₃⁻</text></g>
+        <rect x="60" y="170" width="200" height="16" rx="8" fill="#eee"/><rect class="phbar" x="60" y="170" width="200" height="16" rx="8"/>
+        <text x="160" y="205" font-size="15" text-anchor="middle" class="phA">חומצי (מהקיבה)</text>
+        <text x="160" y="205" font-size="15" text-anchor="middle" class="phB">קרוב לניטרלי</text>
+        <text x="300" y="20" font-size="13" text-anchor="end">מהלבלב ↓</text>
+        <text x="16" y="62" font-size="13">מהקיבה →</text>
+      </svg>
+      <p style="font-size:.78em;margin:0">ה<b>ביקרבונט</b> במיץ הלבלב סותר את החומצה שהגיעה עם המזון מהקיבה. האנזימים בתריסריון פעילים ב-pH הזה.</p>
+    </div>
+    <div class="photo f">
+      <p style="text-align:center;margin:0"><b>2. אנזימי עיכול</b></p>
+      <svg class="anim" viewBox="0 0 320 220" role="img" aria-label="הנפשה: אנזימי הלבלב מפרקים פחמימות, חלבונים ושומנים">
+        <g class="beads"><line x1="120" y1="40" x2="160" y2="40"/><line x1="160" y1="40" x2="200" y2="40"/><circle cx="120" cy="40" r="12" style="--dx:-10px;--dy:-8px"/><circle cx="160" cy="40" r="12" style="--dx:0px;--dy:10px"/><circle cx="200" cy="40" r="12" style="--dx:10px;--dy:-8px"/></g>
+        <g class="beads pr"><line x1="120" y1="110" x2="160" y2="110"/><line x1="160" y1="110" x2="200" y2="110"/><rect x="108" y="98" width="24" height="24" style="--dx:-10px;--dy:-8px"/><rect x="148" y="98" width="24" height="24" style="--dx:0px;--dy:10px"/><rect x="188" y="98" width="24" height="24" style="--dx:10px;--dy:-8px"/></g>
+        <g class="fatrow"><circle class="fatsm" cx="130" cy="180" r="11"/><circle class="fatsm" cx="160" cy="180" r="11"/><circle class="fatsm" cx="190" cy="180" r="11"/></g>
+        <text x="310" y="46" font-size="15" text-anchor="end">עמילאז</text><text x="10" y="46" font-size="14">← סוכרים</text>
+        <text x="310" y="116" font-size="15" text-anchor="end">פרוטאזות</text><text x="10" y="116" font-size="14">← פפטידים</text>
+        <text x="310" y="186" font-size="15" text-anchor="end">ליפאז</text><text x="10" y="186" font-size="13">← ח. שומן + גליצרול</text>
+      </svg>
+      <p style="font-size:.78em;margin:0"><b>עמילאז</b> מפרק עמילן, <b>פרוטאזות</b> מפרקות חלבונים, ו<b>ליפאז</b> מפרק שומנים.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9d: המרה והתחלוב -->
+<section class="slide">
+  <h2><span class="eartag"><span>11</span></span>המרה</h2>
+  <ul>
+    <li class="f">המרה <b>מיוצרת בכבד</b> ו<b>נאגרת בכיס המרה</b>.</li>
+    <li class="f">אחרי ארוחה, בעיקר ארוחה עם שומן, כיס המרה מתכווץ, והמרה <b>מופרשת לתריסריון</b>.</li>
+    <li class="f">המרה <b>אינה אנזים</b>. מה היא עושה לשומן?</li>
+  </ul>
+  <div class="split f">
     <div class="photo">
       <svg class="anim" viewBox="0 0 320 210" role="img" aria-label="הנפשה: מרה מפצלת טיפת שומן לטיפות קטנות, וליפאז מפרק אותן">
         <circle class="bile" cx="160" cy="95" r="10"/>
@@ -226,21 +330,19 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
         <circle class="drop" cx="160" cy="95" r="14" style="--dx:-70px;--dy:-40px"/><circle class="drop" cx="160" cy="95" r="14" style="--dx:0px;--dy:-60px"/><circle class="drop" cx="160" cy="95" r="14" style="--dx:70px;--dy:-40px"/>
         <circle class="drop" cx="160" cy="95" r="14" style="--dx:-75px;--dy:30px"/><circle class="drop" cx="160" cy="95" r="14" style="--dx:0px;--dy:55px"/><circle class="drop" cx="160" cy="95" r="14" style="--dx:75px;--dy:30px"/>
         <g class="prod"><text x="160" y="90" text-anchor="middle" font-size="17">חומצות שומן</text><text x="160" y="114" text-anchor="middle" font-size="17">+ גליצרול</text></g>
-        <text x="160" y="200" text-anchor="middle" font-size="15">מרה מתחלבת ← ליפאז מפרק</text>
+        <text x="160" y="200" text-anchor="middle" font-size="15">טיפה גדולה ← טיפות קטנות ← ליפאז מפרק</text>
       </svg>
     </div>
-    <ul>
-      <li class="f"><b>לבלב</b> ← מיץ לבלב: עמילאז, פרוטאזות, ליפאז, וביקרבונט</li>
-      <li class="f"><b>כבד</b> מייצר מרה; <b>כיס המרה</b> אוגר אותה</li>
-      <li class="f"><b>מלחי מרה מתחלבים שומן</b>: טיפה גדולה ← טיפות קטנות</li>
-    </ul>
+    <div>
+      <p><b>תחלוב:</b> מלחי המרה מפצלים טיפת שומן גדולה ל<b>טיפות קטנות</b>.</p>
+      <p>שטח הפנים של השומן גדל, ו<b>ליפאז</b> מהלבלב מפרק אותו מהר יותר לחומצות שומן ולגליצרול.</p>
+    </div>
   </div>
-  <p class="note f">⚠️ המרה אינה אנזים ואינה מפרקת שומן. הליפאז מפרק אותו.</p>
 </section>
 
 <!-- 10 -->
 <section class="slide">
-  <h2><span class="eartag"><span>9</span></span>המעי הדק: סוף העיכול וספיגה</h2>
+  <h2><span class="eartag"><span>12</span></span>המעי הדק: סוף העיכול וספיגה</h2>
   <div class="split">
     <div class="photo">
       <svg class="anim" viewBox="0 0 320 230" role="img" aria-label="הנפשה: סיסים במעי הדק ותוצרי עיכול שעוברים לדם">
@@ -264,7 +366,7 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 
 <!-- 11 -->
 <section class="slide">
-  <h2><span class="eartag"><span>10</span></span>המעי הגס</h2>
+  <h2><span class="eartag"><span>13</span></span>המעי הגס</h2>
   <ul>
     <li class="f">נספגים בו <b>המים והמלחים שנותרו</b>, והשאריות מתעבות לצואה.</li>
     <li class="f">חיים בו חיידקים רבים, שמייצרים ויטמינים, למשל ויטמין K.</li>
@@ -274,7 +376,7 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 
 <!-- 12 -->
 <section class="slide">
-  <h2><span class="eartag"><span>11</span></span>סיכום: מה מתפרק ואיפה (אדם)</h2>
+  <h2><span class="eartag"><span>14</span></span>סיכום: מה מתפרק ואיפה (אדם)</h2>
   <div class="tbl"><table>
     <tr><th>איבר</th><th>פירוק מכני</th><th>פחמימות</th><th>חלבונים</th><th>שומנים</th><th>ספיגה</th></tr>
     <tr class="f"><td>פה</td><td>✔</td><td>✔ עמילאז</td><td></td><td></td><td></td></tr>
@@ -288,7 +390,7 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 
 <!-- 13 -->
 <section class="slide">
-  <h2><span class="eartag"><span>12</span></span>מערכת העיכול בעוף</h2>
+  <h2><span class="eartag"><span>15</span></span>מערכת העיכול בעוף</h2>
   <div class="split wide">
     <div class="photo" id="figBird"></div>
     <ul>
@@ -305,16 +407,16 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 
 <!-- 14 -->
 <section class="slide">
-  <h2><span class="eartag"><span>13</span></span>בעוף, במציאות: זפק וקורקבן</h2>
+  <h2><span class="eartag"><span>16</span></span>בעוף, במציאות: זפק וקורקבן</h2>
   <div class="pair">
-    <figure class="photo"><img src="assets/img/chicken-crop-open.jpg?v=202610182134" alt="זפק של תרנגולת פתוח ובו גרעינים"><figcaption>זפק פתוח: מלא גרעינים שנאגרו בו<span class="cr">צילום: Arie M den Toom · <a href="https://commons.wikimedia.org/wiki/File:Ingewanden_kip_krop_geopend.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 4.0</span></figcaption></figure>
-    <figure class="photo"><img src="assets/img/gizzard-open.jpg?v=202610182134" alt="קורקבן פתוח ובו מזון טחון וחצץ"><figcaption>קורקבן פתוח: דופן שרירית עבה, ובפנים מזון טחון וחצץ<span class="cr">צילום: MEvalyn · <a href="https://commons.wikimedia.org/wiki/File:Gizzard_and_its_components.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY 4.0</span></figcaption></figure>
+    <figure class="photo"><img src="assets/img/chicken-crop-open.jpg?v=202610182150" alt="זפק של תרנגולת פתוח ובו גרעינים"><figcaption>זפק פתוח: מלא גרעינים שנאגרו בו<span class="cr">צילום: Arie M den Toom · <a href="https://commons.wikimedia.org/wiki/File:Ingewanden_kip_krop_geopend.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 4.0</span></figcaption></figure>
+    <figure class="photo"><img src="assets/img/gizzard-open.jpg?v=202610182150" alt="קורקבן פתוח ובו מזון טחון וחצץ"><figcaption>קורקבן פתוח: דופן שרירית עבה, ובפנים מזון טחון וחצץ<span class="cr">צילום: MEvalyn · <a href="https://commons.wikimedia.org/wiki/File:Gizzard_and_its_components.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY 4.0</span></figcaption></figure>
   </div>
 </section>
 
 <!-- 15 -->
 <section class="slide">
-  <h2><span class="eartag"><span>14</span></span>הפרה: מעלת גירה</h2>
+  <h2><span class="eartag"><span>17</span></span>הפרה: מעלת גירה</h2>
   <div id="figCow" class="photo"></div>
   <p class="f">קיבה אחת בעלת <b>ארבעה מדורים</b>: <span class="pill">כרס</span><span class="pill">בית הכוסות</span><span class="pill">המסס</span><span class="pill">קבה</span></p>
   <p class="f">רק <b>הקבה</b> (הקיבה האמיתית) מפרישה מיצי עיכול.</p>
@@ -322,7 +424,7 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 
 <!-- 16 -->
 <section class="slide">
-  <h2><span class="eartag"><span>15</span></span>הכרס: עיכול סימביוטי</h2>
+  <h2><span class="eartag"><span>18</span></span>הכרס: עיכול סימביוטי</h2>
   <div class="split">
     <div class="photo">
       <svg class="anim" viewBox="0 0 340 290" role="img" aria-label="הנפשה: מיקרואורגניזמים בכרס מפרקים תאית, חומצות שומן נדיפות נספגות לדם וגזים נפלטים">
@@ -347,17 +449,17 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 
 <!-- 17 -->
 <section class="slide">
-  <h2><span class="eartag"><span>16</span></span>במציאות: בית הכוסות והמסס</h2>
+  <h2><span class="eartag"><span>19</span></span>במציאות: בית הכוסות והמסס</h2>
   <div class="pair">
-    <figure class="photo"><img src="assets/img/reticulum-honeycomb.jpg?v=202610182134" alt="דופן בית הכוסות במבנה של חלת דבש"><figcaption>בית הכוסות: דופן כמו חלת דבש<span class="cr"><a href="https://commons.wikimedia.org/wiki/File:Reticulum-honeycomb2.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 3.0</span></figcaption></figure>
-    <figure class="photo"><img src="assets/img/omasum-abomasum-model.jpg?v=202610182134" alt="מודל של המסס העגול והקבה המוארכת"><figcaption>המסס (העגול) והקבה (המוארכת)<span class="cr">צילום: Wagner Souza e Silva · <a href="https://commons.wikimedia.org/wiki/File:Didactic_model_of_a_bovine_omasum_and_abomasum-FMVZ_USP-26.jpeg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 4.0</span></figcaption></figure>
+    <figure class="photo"><img src="assets/img/reticulum-honeycomb.jpg?v=202610182150" alt="דופן בית הכוסות במבנה של חלת דבש"><figcaption>בית הכוסות: דופן כמו חלת דבש<span class="cr"><a href="https://commons.wikimedia.org/wiki/File:Reticulum-honeycomb2.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 3.0</span></figcaption></figure>
+    <figure class="photo"><img src="assets/img/omasum-abomasum-model.jpg?v=202610182150" alt="מודל של המסס העגול והקבה המוארכת"><figcaption>המסס (העגול) והקבה (המוארכת)<span class="cr">צילום: Wagner Souza e Silva · <a href="https://commons.wikimedia.org/wiki/File:Didactic_model_of_a_bovine_omasum_and_abomasum-FMVZ_USP-26.jpeg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 4.0</span></figcaption></figure>
   </div>
   <p class="f">🧲 חפצי מתכת שהפרה בולעת שוקעים בבית הכוסות. ברפתות מחדירים לפרות מגנט שנשאר שם.</p>
 </section>
 
 <!-- 18 -->
 <section class="slide">
-  <h2><span class="eartag"><span>17</span></span>העלאת גירה</h2>
+  <h2><span class="eartag"><span>20</span></span>העלאת גירה</h2>
   <div class="split wide">
     <div class="photo" id="figRumin"></div>
     <ol>
@@ -372,7 +474,7 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 
 <!-- 19 -->
 <section class="slide">
-  <h2><span class="eartag"><span>18</span></span>הכרס והסביבה: מתאן</h2>
+  <h2><span class="eartag"><span>21</span></span>הכרס והסביבה: מתאן</h2>
   <ul>
     <li class="f">בכרס חיים <b>ארכאונים</b> שיוצרים מתאן ממימן ומפחמן דו־חמצני שנוצרים בתסיסה.</li>
     <li class="f">המתאן נפלט בעיקר <b>בגיהוק</b>. מתאן הוא <b>גז חממה</b>.</li>
@@ -383,7 +485,7 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 
 <!-- 20 -->
 <section class="slide">
-  <h2><span class="eartag"><span>19</span></span>השוואה: אדם, עוף ופרה</h2>
+  <h2><span class="eartag"><span>22</span></span>השוואה: אדם, עוף ופרה</h2>
   <div class="tbl"><table>
     <tr><th></th><th>🧍 אדם</th><th>🐔 עוף</th><th>🐄 פרה</th></tr>
     <tr class="f"><td>פירוק מכני</td><td>שיניים</td><td>קורקבן וחצץ</td><td>שיניים + העלאת גירה</td></tr>
@@ -397,19 +499,19 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 
 <!-- 21 -->
 <section class="slide">
-  <h2><span class="eartag"><span>20</span></span>חזרה לחידה</h2>
+  <h2><span class="eartag"><span>23</span></span>חזרה לחידה</h2>
   <p class="big" style="font-size:clamp(2rem,5vw,3.2rem)!important">איך פרה חיה מקש, ואדם לא?</p>
   <p class="f">🧍 לאדם אין צלולאז ← התאית יוצאת בצואה.</p>
   <p class="f">🐄 בכרס של הפרה מיקרואורגניזמים מפרקים תאית ← תסיסה ← חומצות שומן נדיפות נספגות לדם ← אנרגיה.</p>
   <p class="note f">✍️ חזרו להשערה שכתבתם ב"התזונאי של הרפת". האם היא נתמכת? מה הייתם משנים?</p>
-  <div class="row"><a class="btn" href="sim.html?v=202610182134" style="text-decoration:none">🔍 לסימולציה</a><a class="btn tagbtn" href="practice.html?v=202610182134" style="text-decoration:none">✍️ לתרגול</a></div>
+  <div class="row"><a class="btn" href="sim.html?v=202610182150" style="text-decoration:none">🔍 לסימולציה</a><a class="btn tagbtn" href="practice.html?v=202610182150" style="text-decoration:none">✍️ לתרגול</a></div>
 </section>
 
   </div>
   <div class="nav"><button id="prev" aria-label="אחורה">→</button><button id="next" aria-label="קדימה">←</button></div>
   <div class="num" id="num"></div>
 </div>
-<script src="assets/digest.js?v=202610182134"></script>
+<script src="assets/digest.js?v=202610182150"></script>
 <script>
 const NSs = 'http://www.w3.org/2000/svg';
 function labeled(id, a) {
@@ -418,6 +520,11 @@ function labeled(id, a) {
   return svg;
 }
 labeled('figBird', 'bird'); labeled('figCow', 'cow');
+(function () {
+  const box = document.getElementById('figDuo'); box.innerHTML = SVG.human; const svg = box.querySelector('svg');
+  svg.querySelector('[data-o="duodenum"]').classList.add('hl'); svg.querySelector('[data-o="duodenum"]').setAttribute('stroke-width', 16);
+  [['duodenum', 'תריסריון ←', 150, 312], ['stomach', 'קיבה', 250, 240], ['pancreas', 'לבלב', 300, 300], ['liver', 'כבד', 130, 218], ['small', 'מעי דק', 196, 400]].forEach(([id, t, x, y]) => { const e = document.createElementNS(NSs, 'text'); e.setAttribute('x', x); e.setAttribute('y', y); e.setAttribute('class', 'lbl'); if (id === 'duodenum') e.setAttribute('style', 'font-size:20px;fill:#b3261e'); e.textContent = t; svg.appendChild(e) });
+})();
 // כדור מזון שנע לאורך מסלול העיכול באדם
 (function () {
   const box = document.getElementById('figRoute'); box.innerHTML = SVG.human; const svg = box.querySelector('svg');
