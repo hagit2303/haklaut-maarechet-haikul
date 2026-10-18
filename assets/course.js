@@ -5,9 +5,9 @@ const COURSE = [
   { n: 2, t: 'מערכת העיכול: מסע המזון', d: 'מבנה ותפקוד של מערכת העיכול באדם, בעוף ובפרה. מצגת, סימולציה ותרגול.', url: 'unit2-digestion/index.html', icon: '🌾' },
   { n: 3, t: 'חלב, בריאות ומחלות', d: 'הרכב החלב, ממשק החליבה ובריאות העטין.', icon: '🥛' }
 ];
-// עותק עצמאי של יחידה 2: כל הקישורים מובילים לאתר הקורס
+// base: '' בדף הבית, '../' בתוך תיקיית יחידה
 function renderCourse(el, cur, base = '') {
-  base = 'https://hagit2303.github.io/haklaut/';
+  base = 'https://hagit2303.github.io/haklaut/'; // עותק עצמאי: כל הקישורים לאתר הקורס
   el.innerHTML = `<a class="stop" href="${base}index.html" style="text-decoration:none">🏠 דף הבית</a>` + COURSE.map(u => {
     const tag = `<span class="eartag"><span>${u.n}</span></span>`;
     if (u.n === cur) return `<span class="stop cur" aria-current="page">${tag}${u.t}</span>`;

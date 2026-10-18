@@ -19,7 +19,7 @@
 
   <section class="hero">
     <h1>מסע המזון</h1>
-    <p>עקבו אחרי כדור מזון שבו עמילן, חלבון, שומן וסיבים, תחנה אחרי תחנה, באדם, בעוף ובפרה. בכל תחנה בודקים איזה פירוק מתרחש, מה מתפרק ומה נספג. במצב <b>זיהוי בכתיבה</b> כותבים בעצמכם את שם החלק ומה מתפרק בו.</p>
+    <p>עקבו אחרי כדור מזון שבו עמילן, חלבון, שומן וסיבים, תחנה אחרי תחנה, באדם, בעוף ובפרה. בכל תחנה בודקים איזה פירוק מתרחש, מה מתפרק ומה נספג. במצב <b>זיהוי בכתיבה</b> כותבים בעצמכם את שם החלק ואת התפקיד שלו.</p>
   </section>
 
   <div class="row">
@@ -78,22 +78,23 @@ function showStation(i) {
   mark(p.id === 'rumination' ? 'mouth' : p.id);
   $('panel').innerHTML = `<span class="label">${ANIMALS[A].icon} ${ANIMALS[A].name} · ${ANIMALS[A].kind} · תחנה ${cur + 1} מתוך ${R.length}</span>
    <h3>${p.name}</h3><div class="tags">${p.tags.map(t => `<span>${t}</span>`).join('')}</div>
+   <p class="role">🎯 <b>התפקיד:</b> ${ROLE[A][p.id][0]}</p>
    <div class="info"><p>${p.t}</p></div>
-   <div class="nut"><b>מה קורה לרכיבי המזון בכדור?</b>${NUT.map(([k, e, nm]) => { const [s, x] = p.n[k]; return `<div class="r"><span class="e" aria-hidden="true">${e}</span><b>${nm}<span class="badge s${s}">${STATE[s]}</span></b><small>${x}</small></div>` }).join('')}</div>
+   <div class="nut"><b>מה קורה לכל רכיב מזון בתחנה הזו?</b>${NUT.map(([k, e, nm]) => { const [s, x] = p.n[k]; return `<div class="r"><span class="e" aria-hidden="true">${e}</span><b>${nm}<span class="badge st-${s}">${STATE[s]}</span></b>${x ? `<small>${x}</small>` : ''}</div>` }).join('')}</div>
    <div class="row"><button class="btn ghost" id="prev" ${cur ? '' : 'disabled'}>→ הקודם</button><button class="btn" id="next" ${cur < R.length - 1 ? '' : 'disabled'}>הבא ←</button></div>
    <div class="track2" aria-label="תחנות">${R.map((q, k) => `<button data-k="${k}" class="${k === cur ? 'cur' : k < cur ? 'seen' : ''}">${k + 1}. ${q.name}</button>`).join('')}</div>
    ${cur === R.length - 1 ? endNote() : ''}`;
   $('prev').onclick = () => showStation(cur - 1); $('next').onclick = () => showStation(cur + 1);
   $('panel').querySelectorAll('.track2 button').forEach(x => x.onclick = () => showStation(+x.dataset.k));
-  $('figHint').textContent = 'לחיצה על מספר באיור מעבירה לתחנה. "+" מסמן איבר נלווה: המזון אינו עובר בו.';
+  $('figHint').textContent = 'לחיצה על מספר באיור מעבירה לתחנה. "+" מסמן איבר נלווה: המזון אינו עובר בו, אבל הוא מפריש לצינור העיכול אנזימי עיכול או מרה.';
 }
 function endNote() {
-  const t = { human: 'באדם התאית כמעט אינה מתפרקת, כי לאדם אין צלולאז. רוב הסיבים יוצאים בצואה.', bird: 'בעוף הקורקבן מחליף את השיניים. רק מעט מהתאית מותסס, במעיים העיוורים.', cow: 'בפרה רוב התאית מתפרקת בכרס בעזרת המיקרואורגניזמים, והאנרגיה נספגת כחומצות שומן נדיפות. זה הפתרון לחידה מ"התזונאי של הרפת": איך פרה חיה מקש ושחת.' }[A];
+  const t = { human: 'באדם התאית אינה מתפרקת, כי לאדם אין צלולאז. היא יוצאת בצואה.', bird: 'בעוף הקורקבן מחליף את השיניים. רק מעט מהתאית מותסס, במעיים העיוורים.', cow: 'בפרה רוב התאית מתפרקת בכרס בעזרת המיקרואורגניזמים, והאנרגיה נספגת כחומצות שומן נדיפות. זה הפתרון לחידה מ"התזונאי של הרפת": איך פרה חיה מקש ושחת.' }[A];
   return `<p class="note">🏁 <b>סוף המסלול.</b> ${t} נסו גם בעל חיים אחר, ואז עברו למצב זיהוי.</p>`;
 }
 function showOrgan(p) {
   mark(p.id);
-  $('panel').innerHTML = `<span class="label">${ANIMALS[A].icon} ${ANIMALS[A].name}</span><h3>${p.name}</h3><div class="tags"><span class="acc">איבר נלווה</span></div><div class="info"><p>${p.t}</p></div>
+  $('panel').innerHTML = `<span class="label">${ANIMALS[A].icon} ${ANIMALS[A].name}</span><h3>${p.name}</h3><div class="tags"><span class="acc">איבר נלווה</span></div><p class="role">🎯 <b>התפקיד:</b> ${ROLE[A][p.id][0]}</p><div class="info"><p>${p.t}</p></div>
    <div class="row"><button class="btn" id="back">חזרה למסלול המזון</button></div>`;
   $('back').onclick = () => showStation(cur);
 }
@@ -119,9 +120,9 @@ function renderId() {
   const i = idOrder.findIndex(p => p.id === idSel), p = idOrder[i], d = done[p.id], n = Object.keys(done).length;
   $('panel').innerHTML = `<span class="label">${ANIMALS[A].icon} ${ANIMALS[A].name} · זיהוי בכתיבה · עניתם על ${n} מתוך ${idOrder.length}</span>
    <h3>חלק מספר ${i + 1}</h3>
-   <p class="hint">כתבו את התשובות בעצמכם, ואז לחצו בדיקה. אין כאן ציון: אחרי הבדיקה מופיעות התשובה הנכונה וההסבר.</p>
+   <p class="hint">כתבו בעצמכם את שם החלק ואת התפקיד שלו, ואז לחצו בדיקה. אין כאן ציון: אחרי הבדיקה מופיעות התשובה הנכונה וההסבר.</p>
    <div class="task"><p class="q">1. איך קוראים לחלק הזה?</p><input class="numin" id="inName" style="width:100%" autocomplete="off" placeholder="שם החלק" ${d ? 'disabled' : ''} value="${d ? d.name.replace(/"/g, '&quot;') : ''}"></div>
-   <div class="task"><p class="q">2. מה מתפרק בו בפירוק כימי? <small>כתבו: פחמימות, חלבונים, שומנים, תאית, או "כלום"</small></p><input class="numin" id="inNut" style="width:100%" autocomplete="off" placeholder="למשל: חלבונים" ${d ? 'disabled' : ''} value="${d ? d.nut.replace(/"/g, '&quot;') : ''}"></div>
+   <div class="task"><p class="q">2. מה התפקיד שלו? <small>למשל: אגירה, פירוק מכני, הפרשת מרה, ספיגת מים</small></p><input class="numin" id="inNut" style="width:100%" autocomplete="off" placeholder="כתבו את התפקיד" ${d ? 'disabled' : ''} value="${d ? d.nut.replace(/"/g, '&quot;') : ''}"></div>
    <div class="row">${d ? '' : '<button class="btn" id="chk">בדיקה</button><button class="btn ghost" id="hintB">💡 רמז</button>'}${i < idOrder.length - 1 ? '<button class="btn ghost" id="nextP">לחלק הבא ←</button>' : ''}</div>
    <div id="idfb" role="status">${d ? d.html : ''}</div>
    ${n === idOrder.length ? '<p class="fb ok">🎉 עברתם על כל החלקים! נסו בעל חיים אחר, או חזרו למצב חקירה.</p>' : ''}
@@ -133,14 +134,12 @@ function renderId() {
   $('hintB').onclick = () => { $('idfb').innerHTML = `<p class="fb no">💡 ${hint(p)} השם מתחיל באות "${p.name[0]}".</p>` };
   $('inName').focus();
   $('chk').onclick = () => {
-    const nm = $('inName').value.trim(), nt = $('inNut').value.trim(), set = parseNut(nt);
-    if (!nm || !nt) { $('idfb').innerHTML = '<p class="fb no">כתבו תשובה בשני השדות, ואז לחצו בדיקה.</p>'; return }
-    if (!set.length && !/כלום|אין|שום|לא מתפרק/.test(nt)) { $('idfb').innerHTML = '<p class="fb no">לא זיהיתי רכיב מזון בתשובה. כתבו פחמימות, חלבונים, שומנים, תאית, או "כלום".</p>'; return }
-    const K = IDK[A][p.id], same = (x, y) => x.length === y.length && x.every(k => y.includes(k));
-    const okN = nameOk(A, p, nm), okB = [K.br, ...(K.ok2 || [])].some(alt => same(set, alt));
-    const acc = !p.st ? '<br><b>שימו לב:</b> זה איבר נלווה, והמזון אינו עובר בו.' : '';
+    const nm = $('inName').value.trim(), nt = $('inNut').value.trim();
+    if (!nm || nt.length < 3) { $('idfb').innerHTML = '<p class="fb no">כתבו תשובה בשני השדות, ואז לחצו בדיקה.</p>'; return }
+    const okN = nameOk(A, p, nm), okB = roleOk(A, p.id, nt);
+    const acc = !p.st ? `<br><b>שימו לב:</b> זה איבר נלווה. המזון אינו עובר בו, אבל הוא מפריש לצינור העיכול ${SEC[p.id] || 'מיצי עיכול'}.` : '';
     const html = `<p class="fb ${okN ? 'ok' : 'no'}">${okN ? '✓ השם נכון' : '✘ השם הנכון'}: <b>${p.name}</b></p>
-      <p class="fb ${okB ? 'ok' : 'no'}">${okB ? '✓ נכון' : '✘ לא מדויק'}. ${p.st ? 'מה מתפרק כאן' : 'פירוק כימי באיבר עצמו'}: <b>${nutList(K.br)}</b>.${acc}</p>
+      <p class="fb ${okB ? 'ok' : 'no'}">${okB ? '✓ התפקיד נכון' : '✘ התפקיד לא מדויק'}. 🎯 <b>התפקיד:</b> ${ROLE[A][p.id][0]}.${acc}</p>
       <div class="note">${p.t}</div>`;
     done[p.id] = { ok: okN && okB, name: nm, nut: nt, html }; markId(); renderId();
   };

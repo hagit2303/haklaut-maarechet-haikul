@@ -71,7 +71,7 @@
 .nut .r b{font-size:.95rem}
 .nut .r small{color:var(--muted);font-size:.85rem;line-height:1.35}
 .badge{display:inline-block;font-size:.75rem;font-weight:800;padding:1px 8px;border-radius:999px;margin-inline-start:6px;vertical-align:middle}
-.s0{background:var(--line);color:var(--ink)}.s1{background:var(--warn-bg);color:var(--warn)}.s2{background:var(--info-bg);color:var(--info-ink)}.s3{background:var(--good-bg);color:var(--good)}.s4{background:var(--bad-bg);color:var(--bad)}
+.st-no{background:var(--line);color:var(--ink)}.st-br{background:var(--warn-bg);color:var(--warn)}.st-ab{background:var(--good-bg);color:var(--good)}.st-brab{background:var(--info-bg);color:var(--info-ink)}.st-out{background:var(--bad-bg);color:var(--bad)}
 .track2{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
 .track2 button{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:.85rem;color:var(--ink)}
 .track2 button.cur{background:var(--accent);color:#fff;border-color:var(--accent)}
@@ -82,3 +82,4 @@
 .dg .lbl{font:800 13px var(--f-body);fill:var(--ink);paint-order:stroke;stroke:var(--paper);stroke-width:4px;text-anchor:middle}
 @media (max-width:600px){.cmap{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px}.cmap .stop{white-space:nowrap;flex:none}.cmap-t{flex:none}}
 .hs.ok .tagname,.hs.no .tagname,.hs.cur .tagname{fill:var(--ink)}
+.role{background:var(--warn-bg);color:var(--ink);border-inline-start:4px solid var(--tag);border-radius:10px;padding:8px 12px;margin:8px 0;font-size:1.02rem}
