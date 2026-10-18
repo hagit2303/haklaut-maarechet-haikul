@@ -1,0 +1,60 @@
+/* מנוע התרגול (מיחידת הגנטיקה) בצבעי "התזונאי של הרפת" */
+.hint{color:var(--muted);font-size:.92rem}
+.qn{display:inline-block;font-size:.78rem;font-weight:800;padding:2px 10px;border-radius:999px;background:var(--tag);color:var(--tag-ink);margin-bottom:6px}
+.src{font-size:.8rem;color:var(--muted);margin-top:8px}
+.opts label{display:flex;gap:10px;align-items:flex-start;text-align:right;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;line-height:1.45;cursor:pointer}
+.opts label:hover{border-color:var(--accent)}
+.opts label input{margin-top:5px;accent-color:var(--accent);flex:none}
+.opts label.right{background:var(--good-bg);border-color:var(--good)}
+.opts label.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.fb:empty{display:none}
+.fb .ri,.ri{color:var(--good);font-weight:700}
+.bq h3{font-size:1.15rem;margin:4px 0 8px}
+.bpart{display:flex;flex-direction:column;gap:8px;border-top:1px dashed var(--line);padding-top:12px;margin-top:12px}
+.bq textarea[readonly]{opacity:.85}
+.rub{display:flex;flex-direction:column;gap:6px;background:var(--warn-bg);border-radius:12px;padding:10px 14px}
+.rub label{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap}
+.rub input{margin-top:5px;accent-color:var(--accent)}
+.rub details summary{cursor:pointer;font-weight:700;color:var(--accent)}
+.rv,.sc,.fchk,.ck{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:9px 18px;font-weight:700;align-self:flex-start}
+.rv.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.rv[disabled],.sc[disabled],.ck[disabled]{opacity:.45;cursor:not-allowed}
+.match{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center}
+.match select{font:inherit;padding:6px 8px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);min-width:150px}
+.match .m-ok{outline:3px solid var(--good)}.match .m-no{outline:3px solid var(--bad)}
+.mi{border-inline-start:4px solid var(--bad);background:var(--bg);border-radius:8px;padding:8px 12px;margin-bottom:8px}.mi p{margin:2px 0}
+.dl{background:var(--tag);color:var(--tag-ink);border:0;border-radius:14px;font-size:1.15rem;font-weight:800;padding:14px 24px}
+/* זיהוי מדורג */
+.idq{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:12px;align-items:start}
+@media (max-width:700px){.idq{grid-template-columns:1fr}}
+.idq ol{margin:0;padding-inline-start:0;list-style:none;display:grid;gap:6px}
+.idq li{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.idq li b{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--tag);color:var(--tag-ink);flex:none}
+.idq select{font:inherit;padding:6px 8px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);flex:1 1 140px;min-width:0}
+.idq select.m-ok{outline:3px solid var(--good)}.idq select.m-no{outline:3px solid var(--bad)}
+/* מטריצת תפקודים */
+.mx{overflow-x:auto}
+.mx table{border-collapse:collapse;width:100%;min-width:520px;font-size:.92rem}
+.mx th,.mx td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+.mx th{background:var(--accent-soft)}
+.mx td:first-child,.mx th:first-child{text-align:right;font-weight:700}
+.mx input{width:20px;height:20px;accent-color:var(--accent)}
+.mx td.c-ok{background:var(--good-bg)}.mx td.c-no{background:var(--bad-bg)}
+.mx td.c-miss{background:var(--warn-bg)}
+/* חלון שם */
+.sgate{position:fixed;inset:0;z-index:100;background:rgba(31,42,30,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+.sgate .gbox{background:var(--paper);border:2px solid var(--tag);border-radius:18px;max-width:420px;width:100%;padding:20px;display:grid;gap:10px}
+.sgate h2{color:var(--accent)}
+.sgate label{display:grid;gap:4px;font-weight:700}
+.sgate input{font:inherit;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.sgate .gerr{color:var(--bad);font-weight:700;min-height:1em;margin:0}
+/* דוח להורדה */
+#report{position:fixed;left:0;top:0;display:none;z-index:-1;pointer-events:none;width:760px;background:#fff;color:#1f2a1e;font-family:Arial,sans-serif;padding:24px;direction:rtl}
+#report h1{font-family:Arial,sans-serif;font-weight:700;font-size:24px;margin-bottom:6px}
+#report .rr{border-bottom:1px solid #d6dfcf;padding:5px 0;font-size:14px;display:flex;gap:8px}
+#report .rr b{min-width:180px}
+#report .y{color:#1f7a43;font-weight:700}#report .n{color:#b3261e;font-weight:700}
+.part-h{display:flex;gap:12px;align-items:center;margin-top:18px}
+.part-h .eartag{width:44px;height:50px;font-size:1.2rem;border-radius:12px 12px 18px 18px}
+.part-h .eartag span{margin-top:12px}
+.part-h h2{font-size:clamp(1.3rem,3.6vw,1.7rem)}

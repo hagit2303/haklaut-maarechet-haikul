@@ -1,0 +1,16 @@
+// מפת הקורס "מדעי החקלאות". כל היחידות פתוחות תמיד: אין חסימה בין יחידות.
+// יחידה חדשה: מוסיפים שורה עם url (נתיב מתיקיית האתר הראשית). בלי url = "בקרוב".
+const COURSE = [
+  { n: 1, t: 'הרכב המזון: התזונאי של הרפת', d: 'אבות המזון והזנת בקר. 7 תחנות, סימולטור בליל ודו״ח סיום.', url: 'unit1-rechivei-hamazon/index.html', icon: '🐄' },
+  { n: 2, t: 'מערכת העיכול: מסע המזון', d: 'מבנה ותפקוד של מערכת העיכול באדם, בעוף ובפרה. מצגת, סימולציה ותרגול.', url: 'unit2-digestion/index.html', icon: '🌾' },
+  { n: 3, t: 'חלב, בריאות ומחלות', d: 'הרכב החלב, ממשק החליבה ובריאות העטין.', icon: '🥛' }
+];
+// עותק עצמאי של יחידה 2: כל הקישורים מובילים לאתר הקורס
+function renderCourse(el, cur, base = '') {
+  base = 'https://hagit2303.github.io/haklaut/';
+  el.innerHTML = `<a class="stop" href="${base}index.html" style="text-decoration:none">🏠 דף הבית</a>` + COURSE.map(u => {
+    const tag = `<span class="eartag"><span>${u.n}</span></span>`;
+    if (u.n === cur) return `<span class="stop cur" aria-current="page">${tag}${u.t}</span>`;
+    return u.url ? `<a class="stop done" href="${base}${u.url}" style="text-decoration:none">${tag}${u.t}</a>` : `<span class="stop" style="opacity:.5">${tag}${u.t} · בקרוב</span>`;
+  }).join('');
+}

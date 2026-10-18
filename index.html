@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מסע המזון: מערכת העיכול</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/farm.css">
+<link rel="stylesheet" href="assets/digest.css">
+<style>
+.go{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
+.go a{display:grid;gap:6px;text-decoration:none;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);transition:border-color .2s,transform .2s}
+.go a:hover{border-color:var(--accent);transform:translateY(-2px)}
+.go .eartag{width:44px;height:50px;font-size:1.2rem;border-radius:12px 12px 18px 18px}.go .eartag span{margin-top:12px}
+.go h3{font-size:1.25rem;color:var(--accent)}
+.go small{color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.go a{transition:none}.go a:hover{transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar"><span class="brand">🌾 מסע המזון · מערכת העיכול</span></header>
+  <nav class="cmap" id="cmap" aria-label="רצף היחידות"></nav>
+
+  <section class="hero">
+    <span class="label">מדעי החקלאות · יחידה 2 · כ-8 שעות</span>
+    <h1>מסע המזון: מערכת העיכול באדם, בעוף ובפרה</h1>
+    <p>ביחידה הקודמת, "התזונאי של הרפת", למדנו <b>מה</b> יש במזון. עכשיו נלמד <b>מה קורה לו</b>: איפה הוא מתפרק, באיזו דרך, ואיפה רכיבי המזון נספגים לדם.</p>
+    <div class="note">🤫 <b>זוכרים את החידה?</b> "פרה חיה ומייצרת חלב ממזון כמו קש ושחת, שאנחנו לא מסוגלים להפיק ממנו אנרגיה. איך?" ביחידה הזו נפתור אותה. החזיקו בהישג יד את ההשערה שכתבתם.</div>
+  </section>
+
+  <section class="goals">
+    <h3>🎯 בסוף היחידה אוכל:</h3>
+    <ul>
+      <li>להבחין בין פירוק מכני לפירוק כימי, ובין עיכול לספיגה.</li>
+      <li>לזהות את חלקי מערכת העיכול באדם, בעוף ובפרה, ולתאר מה מתפרק ומה נספג בכל חלק.</li>
+      <li>להסביר את הקשר בין מבנה האיברים לבין התפקוד שלהם (שיניים, קורקבן, כרס, מעי דק).</li>
+      <li>להסביר עיכול סימביוטי של תאית בכרס, ואת הקשר בין מעלי גירה לפליטת מתאן.</li>
+    </ul>
+  </section>
+
+  <h2 style="color:var(--accent);margin-top:8px">התחנות</h2>
+  <div class="go">
+    <a href="slides.html"><span class="eartag"><span>1</span></span><h3>📽️ מצגת</h3><span>המבנה והתפקוד של מערכת העיכול באדם, בעוף ובפרה.</span><small>17 שקפים · שיעור פרונטלי או קריאה עצמית</small></a>
+    <a href="sim.html"><span class="eartag"><span>2</span></span><h3>🔍 סימולציה: מסע המזון</h3><span>עוקבים אחרי כדור מזון תחנה אחרי תחנה, ומזהים את חלקי המערכת.</span><small>מצב חקירה ומצב זיהוי · בלי ציון</small></a>
+    <a href="practice.html"><span class="eartag"><span>3</span></span><h3>✍️ מעבדת תרגול</h3><span>זיהוי, שאלות סגורות, איבר ותפקוד, ושאלות בגרות עם מחוון.</span><small>ניסיון אחד לכל שאלה · קובץ PDF למשימה</small></a>
+  </div>
+
+  <section class="card info">
+    <h3>📖 מילון קצר</h3>
+    <div class="tbl"><table>
+      <tr><th>מושג</th><th>הגדרה</th></tr>
+      <tr><td>פירוק מכני</td><td>חלוקת המזון לחתיכות קטנות, בלי שינוי בהרכב הכימי</td></tr>
+      <tr><td>פירוק כימי</td><td>פירוק מולקולות גדולות ליחידות מבנה בעזרת אנזימים</td></tr>
+      <tr><td>ספיגה</td><td>מעבר תוצרי העיכול דרך דופן צינור העיכול אל הדם</td></tr>
+      <tr><td>עיכול סימביוטי</td><td>פירוק מזון בעזרת אנזימים של מיקרואורגניזמים החיים במערכת העיכול</td></tr>
+      <tr><td>תאית</td><td>פחמימה בדופן תאי הצמח. מתפרקת בעזרת האנזים צלולאז</td></tr>
+      <tr><td>זפק</td><td>הרחבה של הוושט בעוף, שבה המזון נאגר ומתרכך</td></tr>
+      <tr><td>קורקבן</td><td>קיבת השרירים של העוף, שבה המזון נטחן בעזרת חצץ</td></tr>
+      <tr><td>כרס</td><td>המדור הגדול בקיבת מעלי הגירה, שבו מיקרואורגניזמים מפרקים תאית</td></tr>
+    </table></div>
+  </section>
+
+  <footer>מדעי החקלאות · יחידה 2 · לפי תוכנית הלימודים החדשה, פרק ג: "הבסיס הביולוגי של תהליכים בבעלי חיים" · היחידה מתבססת על חומרי מט״ח ומורחבת בחומרים נוספים.</footer>
+</div>
+<script src="assets/course.js"></script>
+<script>renderCourse(document.getElementById('cmap'), 2, '../')</script>
+</body>
+</html>

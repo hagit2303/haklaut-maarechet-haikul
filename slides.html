@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מערכת העיכול: מצגת</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/farm.css">
+<link rel="stylesheet" href="assets/digest.css">
+<style>
+body{padding:0;overflow:hidden;height:100vh;height:100dvh}
+.deck{height:100vh;height:100dvh;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:10px;padding:8px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.top .brand{font-family:var(--f-display);color:var(--accent);margin-inline-end:auto}
+.prog{height:4px;background:var(--line)}.prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.slides{flex:1;position:relative;overflow:hidden}
+.slide{position:absolute;inset:0;overflow-y:auto;padding:22px max(16px,calc((100% - 980px)/2)) 80px;display:none}
+.slide.on{display:block;animation:fadein .35s}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}}
+@media (prefers-reduced-motion:reduce){.slide.on{animation:none}}
+.slide h2{font-size:clamp(1.6rem,4.2vw,2.5rem);color:var(--accent);margin-bottom:12px;display:flex;gap:12px;align-items:center}
+.slide h2 .eartag{width:44px;height:50px;font-size:1.2rem;border-radius:12px 12px 18px 18px}
+.slide h2 .eartag span{margin-top:12px}
+.slide p,.slide li{font-size:clamp(1rem,2.2vw,1.2rem);max-width:70ch}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px;align-items:start}
+.big{font-size:clamp(2rem,6vw,3.6rem)!important;font-family:var(--f-display);color:var(--accent);line-height:1.15}
+.pill{display:inline-block;background:var(--tag);color:var(--tag-ink);border-radius:999px;padding:2px 12px;font-weight:800}
+.nav{position:fixed;bottom:14px;inset-inline-start:16px;display:flex;gap:8px;z-index:5}
+.nav button{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:10px 16px;font-weight:800}
+.nav button[disabled]{opacity:.35}
+.num{position:fixed;bottom:22px;inset-inline-end:16px;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
+.slide .dg{max-height:52vh}
+.tbl td,.tbl th{font-size:clamp(.85rem,1.8vw,1rem)}
+</style>
+</head>
+<body>
+<div class="deck">
+  <div class="top"><a class="linkbtn" href="https://hagit2303.github.io/haklaut/" style="text-decoration:none">🏠 דף הבית</a><span class="brand">🌾 מערכת העיכול · מצגת</span><a class="linkbtn" href="index.html">→ לדף היחידה</a><a class="linkbtn" href="sim.html">🔍 לסימולציה</a></div>
+  <div class="prog"><i id="bar"></i></div>
+  <div class="slides" id="slides">
+
+<section class="slide">
+  <span class="label">מדעי החקלאות · יחידה 2</span>
+  <p class="big">מסע המזון</p>
+  <p style="font-size:1.4rem">מערכת העיכול באדם, בעוף ובפרה</p>
+  <div class="note" style="max-width:60ch">🤫 <b>החידה מ"התזונאי של הרפת":</b> פרה חיה ומייצרת חלב ממזון כמו קש ושחת, שאדם אינו מפיק ממנו אנרגיה. איך? בסוף היחידה נבדוק את ההשערה שכתבתם.</div>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>1</span></span>מה קורה למזון?</h2>
+  <p>רכיבי המזון הגדולים (עמילן, חלבונים, שומנים) אינם עוברים דרך דופן צינור העיכול. במערכת העיכול מתרחשים ארבעה תהליכים:</p>
+  <div class="flow">
+    <div class="node"><b>פירוק מכני</b>לעיסה, ערבוב וטחינה</div><span class="arr">←</span>
+    <div class="node"><b>פירוק כימי</b>אנזימים מפרקים מולקולות גדולות ליחידות מבנה</div><span class="arr">←</span>
+    <div class="node"><b>ספיגה</b>יחידות המבנה עוברות דרך דופן המעי אל הדם</div><span class="arr">←</span>
+    <div class="node"><b>הוצאה</b>שאריות שלא נעכלו יוצאות כצואה</div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>2</span></span>פירוק מכני לעומת פירוק כימי</h2>
+  <div class="tbl"><table>
+    <tr><th></th><th>פירוק מכני</th><th>פירוק כימי</th></tr>
+    <tr><td>מה קורה?</td><td>המזון מתחלק לחתיכות קטנות</td><td>קשרים כימיים נשברים, ונוצרים חומרים אחרים</td></tr>
+    <tr><td>האם החומר משתנה?</td><td>לא. אותו חומר, בחתיכות קטנות יותר</td><td>כן. מעמילן נוצרים סוכרים, מחלבון נוצרות חומצות אמינו</td></tr>
+    <tr><td>מי מבצע?</td><td>שיניים, שרירי הקיבה, הקורקבן</td><td>אנזימי עיכול</td></tr>
+  </table></div>
+  <p class="note">🔑 פירוק מכני מגדיל את <b>היחס בין שטח הפנים לנפח</b>. ככל ששטח הפנים גדול יותר, יותר מולקולות של מזון באות במגע עם אנזימי העיכול, והפירוק הכימי מהיר יותר.</p>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>3</span></span>אנזימי העיכול</h2>
+  <div class="tbl"><table>
+    <tr><th>אנזים</th><th>מופרש מ...</th><th>מפרק</th><th>התוצר</th></tr>
+    <tr><td>עמילאז</td><td>בלוטות הרוק (באדם), הלבלב</td><td>עמילן</td><td>דו־סוכרים, ובסוף חד־סוכרים</td></tr>
+    <tr><td>פפסין</td><td>דופן הקיבה</td><td>חלבונים</td><td>פפטידים</td></tr>
+    <tr><td>פרוטאזות</td><td>הלבלב, דופן המעי הדק</td><td>חלבונים ופפטידים</td><td>חומצות אמינו</td></tr>
+    <tr><td>ליפאז</td><td>הלבלב</td><td>שומנים</td><td>חומצות שומן וגליצרול</td></tr>
+    <tr><td>צלולאז</td><td><b>מיקרואורגניזמים</b> בכרס (לא בעל החיים עצמו)</td><td>תאית</td><td>גלוקוז</td></tr>
+  </table></div>
+  <p class="note">התוצרים הסופיים של העיכול: <b>חד־סוכרים, חומצות אמינו, חומצות שומן וגליצרול</b>. אלה נספגים לדם.</p>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>4</span></span>מערכת העיכול באדם</h2>
+  <div class="two">
+    <div id="figHuman"></div>
+    <div>
+      <p><b>צינור העיכול</b> (המזון עובר בו):<br>פה ← ושט ← קיבה ← תריסריון ← מעי דק ← מעי גס ← פי הטבעת</p>
+      <p><b>איברים נלווים</b> (המזון אינו עובר בהם, והם מפרישים לצינור העיכול):<br>בלוטות הרוק, כבד, כיס המרה, לבלב</p>
+      <p class="note">🔍 בסימולציה: לחצו על כל תחנה ועקבו אחרי כדור המזון.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>5</span></span>הפה והשיניים: מבנה ותפקוד</h2>
+  <div class="tbl"><table>
+    <tr><th>סוג שן</th><th>מבנה</th><th>פעולה</th></tr>
+    <tr><td>חותכות</td><td>שטוחות וחדות, בחזית</td><td>חיתוך ראשוני של המזון</td></tr>
+    <tr><td>ניבים</td><td>מחודדות, בצידי החותכות</td><td>שיסוע וקריעה</td></tr>
+    <tr><td>טוחנות</td><td>רחבות, מאחור</td><td>טחינה</td></tr>
+  </table></div>
+  <div class="two">
+    <p>🐕 <b>טורף (כלב):</b> ניבים גדולים וחדים, וטוחנות חדות שחותכות בשר.</p>
+    <p>🐄 <b>אוכל צמחים (פרה):</b> אין ניבים, ובלסת העליונה אין חותכות. במקומן יש כרית שיניים, והטוחנות רחבות.</p>
+  </div>
+  <p>באדם הרוק מרטיב את המזון, ועמילאז הרוק מתחיל לפרק עמילן.</p>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>6</span></span>הקיבה</h2>
+  <ul>
+    <li><b>פירוק מכני:</b> שלוש שכבות שרירים בדופן מערבבות את המזון.</li>
+    <li><b>פירוק כימי:</b> מיץ הקיבה מכיל חומצה הידרוכלורית (pH בסביבות 2) ופפסין, שמפרק חלבונים לפפטידים.</li>
+    <li>בכניסה לקיבה וביציאה ממנה יש <b>סוגרים</b>: שרירים טבעתיים שנסגרים בזמן שהמזון בקיבה.</li>
+  </ul>
+  <p class="note">🤔 <b>שאלה למחשבה:</b> מזון עתיר שומן, אלכוהול ועישון מחלישים את הסוגר שבין הוושט לקיבה. מה עלול לקרות? (רמז: צרבת)</p>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>7</span></span>התריסריון: הלבלב, הכבד והמרה</h2>
+  <ul>
+    <li>הלבלב מפריש לתריסריון <b>עמילאז, פרוטאזות וליפאז</b>, וגם ביקרבונט שסותר את החומצה מהקיבה.</li>
+    <li>הכבד מייצר <b>מרה</b>, והמרה נאגרת בכיס המרה.</li>
+    <li><b>מלחי המרה מתחלבים את השומן</b>: מפצלים אותו לטיפות קטנות. שטח הפנים גדל, והליפאז מפרק את השומן מהר יותר.</li>
+  </ul>
+  <p class="note">⚠️ <b>שימו לב:</b> המרה אינה אנזים ואינה מפרקת שומן. היא מתחלבת אותו, והפירוק הכימי נעשה על ידי הליפאז.</p>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>8</span></span>המעי הדק: סוף העיכול וספיגה</h2>
+  <ul>
+    <li>אנזימים בדופן המעי משלימים את הפירוק ליחידות מבנה.</li>
+    <li>תוצרי העיכול נספגים דרך דופן המעי אל הדם.</li>
+    <li>הדופן מקופלת ומכוסה <b>סיסים</b>, ועל התאים יש מיקרו־סיסים. כך שטח הפנים לספיגה גדול מאוד.</li>
+  </ul>
+  <h2 style="font-size:1.5rem;margin-top:14px">המעי הגס</h2>
+  <ul>
+    <li>נספגים בו המים והמלחים שנותרו, והשאריות מתעבות לצואה.</li>
+    <li>חיים בו חיידקים רבים, שמתסיסים חלק מהסיבים ומייצרים ויטמינים, למשל ויטמין K.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>9</span></span>סיכום: מה מתפרק ואיפה (אדם)</h2>
+  <div class="tbl"><table>
+    <tr><th>איבר</th><th>פירוק מכני</th><th>פחמימות</th><th>חלבונים</th><th>שומנים</th><th>ספיגה</th></tr>
+    <tr><td>פה</td><td>✔</td><td>✔ עמילאז</td><td></td><td></td><td></td></tr>
+    <tr><td>קיבה</td><td>✔</td><td></td><td>✔ פפסין</td><td></td><td></td></tr>
+    <tr><td>תריסריון</td><td></td><td>✔ עמילאז</td><td>✔ פרוטאזות</td><td>✔ ליפאז (ומרה)</td><td></td></tr>
+    <tr><td>מעי דק</td><td></td><td>✔</td><td>✔</td><td>✔</td><td>✔ תוצרי העיכול</td></tr>
+    <tr><td>מעי גס</td><td></td><td></td><td></td><td></td><td>✔ מים ומלחים</td></tr>
+    <tr><th>תוצר סופי</th><th></th><th>חד־סוכרים</th><th>חומצות אמינו</th><th>חומצות שומן + גליצרול</th><th></th></tr>
+  </table></div>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>10</span></span>מערכת העיכול בעוף</h2>
+  <div class="two">
+    <div id="figBird"></div>
+    <ul>
+      <li><b>מקור:</b> אין שיניים. המזון נבלע כמעט שלם.</li>
+      <li><b>זפק:</b> הרחבה של הוושט. המזון נאגר בו, סופג מים ומתרכך.</li>
+      <li><b>קיבה בלוטית:</b> מפרישה חומצה ופפסין.</li>
+      <li><b>קורקבן (קיבת שרירים):</b> דופן שרירית עבה וחצץ, ובו מתרחש פירוק מכני. אינו מפריש אנזימים.</li>
+      <li><b>מעי דק:</b> סוף הפירוק הכימי וספיגה.</li>
+      <li><b>מעיים עיוורים:</b> חיידקים מתסיסים מעט סיבים.</li>
+      <li><b>ביב:</b> פתח משותף למערכת העיכול, למערכת השתן ולמערכת הרבייה.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>11</span></span>הפרה: מעלת גירה</h2>
+  <div id="figCow"></div>
+  <p>קיבה אחת בעלת <b>ארבעה מדורים</b>: <span class="pill">כרס</span> <span class="pill">בית הכוסות</span> <span class="pill">המסס (קיבת העלעלים)</span> <span class="pill">קבה (קיבה אמיתית)</span>. רק הקבה מפרישה מיצי עיכול.</p>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>12</span></span>הכרס: עיכול סימביוטי</h2>
+  <div class="flow">
+    <div class="node"><b>מיקרואורגניזמים</b>חיידקים, חד־תאיים ופטריות בכרס</div><span class="arr">←</span>
+    <div class="node"><b>צלולאז</b>מפרק תאית לגלוקוז</div><span class="arr">←</span>
+    <div class="node"><b>תסיסה</b>המיקרואורגניזמים מתסיסים את הגלוקוז</div><span class="arr">←</span>
+    <div class="node"><b>חומצות שומן נדיפות</b>נספגות דרך דופן הכרס לדם: מקור האנרגיה העיקרי של הפרה</div>
+  </div>
+  <ul>
+    <li>הפרה עצמה אינה מייצרת צלולאז. היחסים בין הפרה למיקרואורגניזמים הם <b>סימביוזה</b>.</li>
+    <li>המיקרואורגניזמים בונים גם חלבון משלהם. בהמשך, בקבה ובמעי הדק, החלבון הזה מתפרק ונספג.</li>
+    <li>בתסיסה נוצרים גם גזים, פחמן דו־חמצני ומתאן, שנפלטים בגיהוק.</li>
+    <li>אנטיביוטיקה במינון גבוה פוגעת במיקרואורגניזמים בכרס, וכתוצאה מכך עיכול התאית נפגע. (בגרות 2016)</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>13</span></span>העלאת גירה, רוק וסיבים</h2>
+  <ol>
+    <li>הפרה לועסת לעיסה קצרה ובולעת. המזון מגיע לכרס.</li>
+    <li>התכווצויות הכרס ובית הכוסות מחזירות מנות מזון לפה.</li>
+    <li>לעיסה חוזרת, ממושכת ויסודית, והפרשת רוק רב. החלקיקים קטנים יותר, שטח הפנים גדל, והפירוק בכרס מהיר יותר.</li>
+    <li>המזון נבלע שוב. חלקיקים קטנים עוברים להמסס, שם נספגים מים, ואז לקבה.</li>
+  </ol>
+  <p class="note">🧪 הרוק של הפרה מכיל ביקרבונט, ששומר על pH קרוב לניטרלי בכרס. מנה עשירה בסיבים מגדילה את זמן העלאת הגירה ואת כמות הרוק. (בגרות 2019)</p>
+  <p class="note">🧲 חפצי מתכת שהפרה בולעת שוקעים בבית הכוסות. ברפתות מחדירים לפרות מגנט שנשאר שם ואוסף אותם.</p>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>14</span></span>הכרס והסביבה: מתאן</h2>
+  <ul>
+    <li>בכרס חיים <b>ארכאונים מתאנוגניים</b>. הם יוצרים מתאן ממימן ומפחמן דו־חמצני שנוצרים בתסיסה.</li>
+    <li>המתאן נפלט מהפרה בעיקר בגיהוק. מתאן הוא <b>גז חממה</b>, ולכן גידול מעלי גירה תורם לשינוי האקלים.</li>
+    <li>דרכים שנבדקות לצמצום הפליטה: שינוי הרכב מנת המזון, תוספי מזון שמעכבים את יצירת המתאן, וטיפוח גנטי.</li>
+  </ul>
+  <p class="note">📰 משימת חקר מתוכנית הלימודים: חפשו מאמר על פתרון אחד לצמצום פליטת המתאן מפרות, והציגו אותו בכיתה.</p>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>15</span></span>השוואה: אדם, עוף ופרה</h2>
+  <div class="tbl"><table>
+    <tr><th></th><th>🧍 אדם</th><th>🐔 עוף</th><th>🐄 פרה</th></tr>
+    <tr><td>פירוק מכני</td><td>שיניים</td><td>קורקבן וחצץ</td><td>שיניים + העלאת גירה</td></tr>
+    <tr><td>אגירה</td><td>קיבה</td><td>זפק</td><td>כרס</td></tr>
+    <tr><td>מיצי קיבה</td><td>קיבה</td><td>קיבה בלוטית</td><td>קבה</td></tr>
+    <tr><td>פירוק תאית</td><td>כמעט אין</td><td>מעט, במעיים העיוורים</td><td>רב, בכרס (עיכול סימביוטי)</td></tr>
+    <tr><td>עיקר הספיגה</td><td>מעי דק</td><td>מעי דק</td><td>דופן הכרס (חומצות שומן נדיפות) + מעי דק</td></tr>
+    <tr><td>פתח יציאה</td><td>פי הטבעת</td><td>ביב</td><td>פי הטבעת</td></tr>
+  </table></div>
+</section>
+
+<section class="slide">
+  <h2><span class="eartag"><span>16</span></span>חזרה לחידה</h2>
+  <p class="big" style="font-size:clamp(1.4rem,4vw,2.2rem)!important">איך פרה חיה מקש ושחת, ואדם לא?</p>
+  <p>לאדם אין אנזים שמפרק תאית, ולכן רוב הסיבים יוצאים בצואה. בכרס של הפרה חיים מיקרואורגניזמים שמפרישים צלולאז ומפרקים את התאית. את הגלוקוז שנוצר הם מתסיסים לחומצות שומן נדיפות, והן נספגות לדם הפרה ומשמשות מקור אנרגיה.</p>
+  <p class="note">✍️ חזרו להשערה שכתבתם ב"התזונאי של הרפת". האם היא נתמכת בהסבר הזה? מה הייתם משנים?</p>
+  <div class="row"><a class="btn" href="sim.html" style="text-decoration:none">🔍 לסימולציה</a><a class="btn tagbtn" href="practice.html" style="text-decoration:none">✍️ לתרגול</a></div>
+</section>
+
+  </div>
+  <div class="nav"><button id="prev" aria-label="שקף קודם">→</button><button id="next" aria-label="שקף הבא">←</button></div>
+  <div class="num" id="num"></div>
+</div>
+<script src="assets/digest.js"></script>
+<script>
+// איורים עם שמות החלקים
+function labeled(id, a) {
+  const box = document.getElementById(id); box.innerHTML = SVG[a]; const svg = box.querySelector('svg');
+  idParts(a).forEach(p => { const t = document.createElementNS('http://www.w3.org/2000/svg', 'text'); t.setAttribute('x', p.x); t.setAttribute('y', p.y + 4); t.setAttribute('class', 'lbl'); t.textContent = p.name.replace(/ \(.*\)/, ''); svg.appendChild(t) });
+}
+labeled('figHuman', 'human'); labeled('figBird', 'bird'); labeled('figCow', 'cow');
+const S = [...document.querySelectorAll('.slide')]; let i = 0;
+function show(n) { i = Math.max(0, Math.min(n, S.length - 1)); S.forEach((s, k) => s.classList.toggle('on', k === i)); S[i].scrollTop = 0;
+  document.getElementById('num').textContent = `${i + 1} / ${S.length}`; document.getElementById('bar').style.width = (i + 1) / S.length * 100 + '%';
+  document.getElementById('prev').disabled = !i; document.getElementById('next').disabled = i === S.length - 1; history.replaceState(null, '', '#' + (i + 1)) }
+document.getElementById('prev').onclick = () => show(i - 1); document.getElementById('next').onclick = () => show(i + 1);
+document.addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'PageDown' || e.key === ' ') show(i + 1); if (e.key === 'ArrowRight' || e.key === 'PageUp') show(i - 1) });
+let x0 = null; document.addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+document.addEventListener('touchend', e => { if (x0 === null) return; const d = e.changedTouches[0].clientX - x0; if (Math.abs(d) > 60) show(i + (d > 0 ? 1 : -1)); x0 = null });
+show((parseInt(location.hash.slice(1)) || 1) - 1);
+addEventListener('hashchange', () => { const n = (parseInt(location.hash.slice(1)) || 1) - 1; if (n !== i) show(n) });
+</script>
+</body>
+</html>

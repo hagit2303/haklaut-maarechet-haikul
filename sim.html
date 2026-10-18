@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מסע המזון: סימולציה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/farm.css">
+<link rel="stylesheet" href="assets/digest.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <span class="brand">🌾 מסע המזון · סימולציה</span>
+    <a class="linkbtn" href="index.html">→ לדף היחידה</a>
+  </header>
+  <nav class="cmap" id="cmap" aria-label="רצף היחידות"></nav>
+
+  <section class="hero">
+    <h1>מסע המזון</h1>
+    <p>עקבו אחרי כדור מזון שבו עמילן, חלבון, שומן וסיבים, תחנה אחרי תחנה, באדם, בעוף ובפרה. בכל תחנה בודקים איזה פירוק מתרחש, מה מתפרק ומה נספג. במצב <b>זיהוי בכתיבה</b> כותבים בעצמכם את שם החלק ומה מתפרק בו.</p>
+  </section>
+
+  <div class="row">
+    <div class="animals" role="group" aria-label="בחירת בעל חיים">
+      <button data-a="human" aria-pressed="true">🧍 אדם</button>
+      <button data-a="bird" aria-pressed="false">🐔 עוף</button>
+      <button data-a="cow" aria-pressed="false">🐄 פרה</button>
+    </div>
+    <div class="modes" role="group" aria-label="מצב" style="margin-inline-start:auto">
+      <button data-m="explore" aria-pressed="true">🔍 חקירה</button>
+      <button data-m="id" aria-pressed="false">✍️ זיהוי בכתיבה</button>
+    </div>
+  </div>
+
+  <div class="simgrid" style="margin-top:12px">
+    <div class="stage"><div id="fig"></div><p class="hint-sel" id="figHint"></p></div>
+    <div class="card panel" id="panel" aria-live="polite"></div>
+  </div>
+
+  <footer>מדעי החקלאות · יחידה 2: מערכת העיכול · האיורים סכמטיים ואינם בקנה מידה · היחידה מתבססת על חומרי מט״ח ומורחבת בחומרים נוספים.</footer>
+</div>
+
+<script src="assets/course.js"></script>
+<script src="assets/digest.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const NS = 'http://www.w3.org/2000/svg';
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]] } return a };
+renderCourse($('cmap'), 2, '../');
+
+let A = 'human', M = 'explore', cur = 0;
+
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e }
+
+function draw() {
+  $('fig').innerHTML = SVG[A];
+  const svg = $('fig').querySelector('svg');
+  const defs = el('defs', {}, svg); const mk = el('marker', { id: 'arrowHead', viewBox: '0 0 10 10', refX: 6, refY: 5, markerWidth: 6, markerHeight: 6, orient: 'auto-start-reverse' }, defs);
+  el('path', { d: 'M0 0 L10 5 L0 10 Z', fill: 'var(--accent)' }, mk);
+  const g = el('g', { id: 'hsg' }, svg);
+  const parts = M === 'explore' ? ANIMALS[A].parts.filter(p => !p.special) : idOrder;
+  parts.forEach((p, i) => {
+    const h = el('g', { class: 'hs', tabindex: 0, role: 'button', 'data-id': p.id, transform: `translate(${p.x} ${p.y})` }, g);
+    el('circle', { r: 11 }, h);
+    const t = el('text', {}, h); t.textContent = M === 'explore' ? (p.st || '+') : (i + 1);
+    h.setAttribute('aria-label', M === 'explore' ? p.name : 'חלק מספר ' + (i + 1));
+  });
+  if (M === 'explore') { const b = el('g', { class: 'bolus', id: 'bolus' }, svg); el('circle', { r: 8 }, b) }
+}
+
+/* ---------- חקירה ---------- */
+function showStation(i) {
+  const R = route(A); cur = Math.max(0, Math.min(i, R.length - 1)); const p = R[cur];
+  const b = $('bolus'); if (b) b.style.transform = `translate(${p.x - 15}px,${p.y - 15}px)`;
+  const ra = document.getElementById('ruminArrow'); if (ra) ra.classList.toggle('on', !!p.special);
+  mark(p.id === 'rumination' ? 'mouth' : p.id);
+  $('panel').innerHTML = `<span class="label">${ANIMALS[A].icon} ${ANIMALS[A].name} · ${ANIMALS[A].kind} · תחנה ${cur + 1} מתוך ${R.length}</span>
+   <h3>${p.name}</h3><div class="tags">${p.tags.map(t => `<span>${t}</span>`).join('')}</div>
+   <div class="info"><p>${p.t}</p></div>
+   <div class="nut"><b>מה קורה לרכיבי המזון בכדור?</b>${NUT.map(([k, e, nm]) => { const [s, x] = p.n[k]; return `<div class="r"><span class="e" aria-hidden="true">${e}</span><b>${nm}<span class="badge s${s}">${STATE[s]}</span></b><small>${x}</small></div>` }).join('')}</div>
+   <div class="row"><button class="btn ghost" id="prev" ${cur ? '' : 'disabled'}>→ הקודם</button><button class="btn" id="next" ${cur < R.length - 1 ? '' : 'disabled'}>הבא ←</button></div>
+   <div class="track2" aria-label="תחנות">${R.map((q, k) => `<button data-k="${k}" class="${k === cur ? 'cur' : k < cur ? 'seen' : ''}">${k + 1}. ${q.name}</button>`).join('')}</div>
+   ${cur === R.length - 1 ? endNote() : ''}`;
+  $('prev').onclick = () => showStation(cur - 1); $('next').onclick = () => showStation(cur + 1);
+  $('panel').querySelectorAll('.track2 button').forEach(x => x.onclick = () => showStation(+x.dataset.k));
+  $('figHint').textContent = 'לחיצה על מספר באיור מעבירה לתחנה. "+" מסמן איבר נלווה: המזון אינו עובר בו.';
+}
+function endNote() {
+  const t = { human: 'באדם התאית כמעט אינה מתפרקת, כי לאדם אין צלולאז. רוב הסיבים יוצאים בצואה.', bird: 'בעוף הקורקבן מחליף את השיניים. רק מעט מהתאית מותסס, במעיים העיוורים.', cow: 'בפרה רוב התאית מתפרקת בכרס בעזרת המיקרואורגניזמים, והאנרגיה נספגת כחומצות שומן נדיפות. זה הפתרון לחידה מ"התזונאי של הרפת": איך פרה חיה מקש ושחת.' }[A];
+  return `<p class="note">🏁 <b>סוף המסלול.</b> ${t} נסו גם בעל חיים אחר, ואז עברו למצב זיהוי.</p>`;
+}
+function showOrgan(p) {
+  mark(p.id);
+  $('panel').innerHTML = `<span class="label">${ANIMALS[A].icon} ${ANIMALS[A].name}</span><h3>${p.name}</h3><div class="tags"><span class="acc">איבר נלווה</span></div><div class="info"><p>${p.t}</p></div>
+   <div class="row"><button class="btn" id="back">חזרה למסלול המזון</button></div>`;
+  $('back').onclick = () => showStation(cur);
+}
+function mark(id) {
+  document.querySelectorAll('.dg [data-o]').forEach(e => e.classList.toggle('hl', e.dataset.o === id));
+  document.querySelectorAll('.hs').forEach(h => h.classList.toggle('cur', h.dataset.id === id));
+}
+
+/* ---------- זיהוי בכתיבה (משוב בלי ציון) ---------- */
+let idOrder = [], idSel = null, done = {};
+function startId() {
+  done = {}; idOrder = idParts(A).slice().sort((p, q) => p.y - q.y || p.x - q.x);
+  idSel = idOrder[0].id; draw(); markId(); renderId();
+}
+function markId() {
+  document.querySelectorAll('.hs').forEach(h => { const d = done[h.dataset.id];
+    h.classList.toggle('cur', h.dataset.id === idSel); h.classList.toggle('ok', !!d && d.ok); h.classList.toggle('no', !!d && !d.ok);
+    h.querySelectorAll('.tagname').forEach(t => t.remove());
+    if (d) { const t = document.createElementNS(NS, 'text'); t.setAttribute('class', 'tagname'); t.setAttribute('y', -16); t.textContent = ANIMALS[A].parts.find(p => p.id === h.dataset.id).name.replace(/ \(.*\)/, ''); h.appendChild(t) } });
+}
+const nutList = ks => ks.length ? ks.map(k => NUTN[k]).join(', ') : 'שום רכיב לא מתפרק כאן בפירוק כימי';
+function renderId() {
+  const i = idOrder.findIndex(p => p.id === idSel), p = idOrder[i], d = done[p.id], n = Object.keys(done).length;
+  $('panel').innerHTML = `<span class="label">${ANIMALS[A].icon} ${ANIMALS[A].name} · זיהוי בכתיבה · עניתם על ${n} מתוך ${idOrder.length}</span>
+   <h3>חלק מספר ${i + 1}</h3>
+   <p class="hint">כתבו את התשובות בעצמכם, ואז לחצו בדיקה. אין כאן ציון: אחרי הבדיקה מופיעות התשובה הנכונה וההסבר.</p>
+   <div class="task"><p class="q">1. איך קוראים לחלק הזה?</p><input class="numin" id="inName" style="width:100%" autocomplete="off" placeholder="שם החלק" ${d ? 'disabled' : ''} value="${d ? d.name.replace(/"/g, '&quot;') : ''}"></div>
+   <div class="task"><p class="q">2. מה מתפרק בו בפירוק כימי? <small>כתבו: פחמימות, חלבונים, שומנים, תאית, או "כלום"</small></p><input class="numin" id="inNut" style="width:100%" autocomplete="off" placeholder="למשל: חלבונים" ${d ? 'disabled' : ''} value="${d ? d.nut.replace(/"/g, '&quot;') : ''}"></div>
+   <div class="row">${d ? '' : '<button class="btn" id="chk">בדיקה</button><button class="btn ghost" id="hintB">💡 רמז</button>'}${i < idOrder.length - 1 ? '<button class="btn ghost" id="nextP">לחלק הבא ←</button>' : ''}</div>
+   <div id="idfb" role="status">${d ? d.html : ''}</div>
+   ${n === idOrder.length ? '<p class="fb ok">🎉 עברתם על כל החלקים! נסו בעל חיים אחר, או חזרו למצב חקירה.</p>' : ''}
+   <div class="row"><button class="btn ghost" id="restart">התחלה מחדש</button></div>`;
+  $('figHint').textContent = 'לחיצה על מספר באיור בוחרת חלק. אפשר לענות בכל סדר.';
+  $('restart').onclick = startId;
+  if ($('nextP')) $('nextP').onclick = () => { const nx = idOrder.slice(i + 1).find(q => !done[q.id]) || idOrder[i + 1]; idSel = nx.id; markId(); renderId() };
+  if (d) return;
+  $('hintB').onclick = () => { $('idfb').innerHTML = `<p class="fb no">💡 ${hint(p)} השם מתחיל באות "${p.name[0]}".</p>` };
+  $('inName').focus();
+  $('chk').onclick = () => {
+    const nm = $('inName').value.trim(), nt = $('inNut').value.trim(), set = parseNut(nt);
+    if (!nm || !nt) { $('idfb').innerHTML = '<p class="fb no">כתבו תשובה בשני השדות, ואז לחצו בדיקה.</p>'; return }
+    if (!set.length && !/כלום|אין|שום|לא מתפרק/.test(nt)) { $('idfb').innerHTML = '<p class="fb no">לא זיהיתי רכיב מזון בתשובה. כתבו פחמימות, חלבונים, שומנים, תאית, או "כלום".</p>'; return }
+    const K = IDK[A][p.id], same = (x, y) => x.length === y.length && x.every(k => y.includes(k));
+    const okN = nameOk(A, p, nm), okB = [K.br, ...(K.ok2 || [])].some(alt => same(set, alt));
+    const acc = !p.st ? '<br><b>שימו לב:</b> זה איבר נלווה, והמזון אינו עובר בו.' : '';
+    const html = `<p class="fb ${okN ? 'ok' : 'no'}">${okN ? '✓ השם נכון' : '✘ השם הנכון'}: <b>${p.name}</b></p>
+      <p class="fb ${okB ? 'ok' : 'no'}">${okB ? '✓ נכון' : '✘ לא מדויק'}. ${p.st ? 'מה מתפרק כאן' : 'פירוק כימי באיבר עצמו'}: <b>${nutList(K.br)}</b>.${acc}</p>
+      <div class="note">${p.t}</div>`;
+    done[p.id] = { ok: okN && okB, name: nm, nut: nt, html }; markId(); renderId();
+  };
+  $('inNut').onkeydown = $('inName').onkeydown = e => { if (e.key === 'Enter') $('chk').click() };
+}
+function hint(p) {
+  const H = { mouth: 'הפה נמצא בראש, בתחילת המסלול.', beak: 'המקור בקצה הראש.', esophagus: 'צינור ארוך שיוצא מהפה.', stomach: 'נמצאת אחרי הוושט, מתחת לכבד.', duodenum: 'יוצא מהקיבה ויוצר קשת.', small: 'הצינור המפותל והארוך.', large: 'רחב יותר, ומוביל לפתח היציאה.', anus: 'בקצה המסלול.', liver: 'האיבר הגדול והכהה.', gall: 'קטן וירקרק, מתחת לכבד.', pancreas: 'צהבהב ומוארך.', crop: 'הרחבה בוושט, בבסיס הצוואר.', prov: 'קטנה ומוארכת, לפני הקורקבן.', gizzard: 'עגול ושרירי, ובתוכו חצץ.', ceca: 'שני שקים שיוצאים מאותה נקודה.', cloaca: 'הפתח בקצה הגוף.', rumen: 'המדור הגדול ביותר.', reticulum: 'הדופן דמוית חלת דבש.', omasum: 'בפנים קפלים כמו דפים.', abomasum: 'מוארכת, בתחתית הבטן.' };
+  return 'רמז: ' + (H[p.id] || '');
+}
+
+/* ---------- אירועים ---------- */
+$('fig').addEventListener('click', e => {
+  const h = e.target.closest('.hs'); if (!h) return;
+  const id = h.dataset.id;
+  if (M === 'id') { idSel = id; markId(); renderId(); return }
+  const p = ANIMALS[A].parts.find(q => q.id === id);
+  if (p.st) showStation(route(A).indexOf(p)); else showOrgan(p);
+});
+$('fig').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('.hs')) { e.preventDefault(); e.target.closest('.hs').dispatchEvent(new MouseEvent('click', { bubbles: true })) } });
+document.querySelectorAll('.animals button').forEach(b => b.onclick = () => { A = b.dataset.a; document.querySelectorAll('.animals button').forEach(x => x.setAttribute('aria-pressed', x === b)); go() });
+document.querySelectorAll('.modes button').forEach(b => b.onclick = () => { M = b.dataset.m; document.querySelectorAll('.modes button').forEach(x => x.setAttribute('aria-pressed', x === b)); go() });
+function go() { if (M === 'id') startId(); else { draw(); showStation(0) } }
+const q = new URLSearchParams(location.search); if (ANIMALS[q.get('a')]) { A = q.get('a'); document.querySelectorAll('.animals button').forEach(x => x.setAttribute('aria-pressed', x.dataset.a === A)) }
+go();
+</script>
+</body>
+</html>
