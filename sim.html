@@ -6,14 +6,14 @@
 <title>מסע המזון: סימולציה</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700;800&display=swap">
-<link rel="stylesheet" href="assets/farm.css?v=202610182150">
-<link rel="stylesheet" href="assets/digest.css?v=202610182150">
+<link rel="stylesheet" href="assets/farm.css?v=202610182235">
+<link rel="stylesheet" href="assets/digest.css?v=202610182235">
 </head>
 <body>
 <div class="wrap">
   <header class="bar">
     <span class="brand">🌾 מסע המזון · סימולציה</span>
-    <a class="linkbtn" href="index.html?v=202610182150">→ לדף היחידה</a>
+    <a class="linkbtn" href="index.html?v=202610182235">→ לדף היחידה</a>
   </header>
   <nav class="cmap" id="cmap" aria-label="רצף היחידות"></nav>
 
@@ -42,8 +42,8 @@
   <footer>מדעי החקלאות · יחידה 2: מערכת העיכול · האיורים סכמטיים ואינם בקנה מידה · היחידה מתבססת על חומרי מט״ח ומורחבת בחומרים נוספים.</footer>
 </div>
 
-<script src="assets/course.js?v=202610182150"></script>
-<script src="assets/digest.js?v=202610182150"></script>
+<script src="assets/course.js?v=202610182235"></script>
+<script src="assets/digest.js?v=202610182235"></script>
 <script>
 const $ = id => document.getElementById(id);
 const NS = 'http://www.w3.org/2000/svg';
@@ -76,10 +76,12 @@ function showStation(i) {
   const b = $('bolus'); if (b) b.style.transform = `translate(${p.x - 15}px,${p.y - 15}px)`;
   const ra = document.getElementById('ruminArrow'); if (ra) ra.classList.toggle('on', !!p.special);
   mark(p.id === 'rumination' ? 'mouth' : p.id);
+  secretions(A === 'human' && p.id === 'duodenum');
   $('panel').innerHTML = `<span class="label">${ANIMALS[A].icon} ${ANIMALS[A].name} · ${ANIMALS[A].kind} · תחנה ${cur + 1} מתוך ${R.length}</span>
    <h3>${p.name}</h3><div class="tags">${p.tags.map(t => `<span>${t}</span>`).join('')}</div>
    <p class="role">🎯 <b>התפקיד:</b> ${ROLE[A][p.id][0]}</p>
    <div class="info"><p>${p.t}</p></div>
+   ${A === 'human' && p.id === 'duodenum' ? '<p class="note">באיור: <b style="color:#3f7a2a">מרה</b> זורמת מכיס המרה, ו<b style="color:#7b4fb8">מיץ לבלב</b> זורם מהלבלב, אל התריסריון.</p>' : ''}
    <div class="nut"><b>מה קורה לכל רכיב מזון בתחנה הזו?</b>${NUT.map(([k, e, nm]) => { const [s, x] = p.n[k]; return `<div class="r"><span class="e" aria-hidden="true">${e}</span><b>${nm}<span class="badge st-${s}">${STATE[s]}</span></b>${x ? `<small>${x}</small>` : ''}</div>` }).join('')}</div>
    <div class="row"><button class="btn ghost" id="prev" ${cur ? '' : 'disabled'}>→ הקודם</button><button class="btn" id="next" ${cur < R.length - 1 ? '' : 'disabled'}>הבא ←</button></div>
    <div class="track2" aria-label="תחנות">${R.map((q, k) => `<button data-k="${k}" class="${k === cur ? 'cur' : k < cur ? 'seen' : ''}">${k + 1}. ${q.name}</button>`).join('')}</div>
@@ -87,6 +89,18 @@ function showStation(i) {
   $('prev').onclick = () => showStation(cur - 1); $('next').onclick = () => showStation(cur + 1);
   $('panel').querySelectorAll('.track2 button').forEach(x => x.onclick = () => showStation(+x.dataset.k));
   $('figHint').textContent = 'לחיצה על מספר באיור מעבירה לתחנה. "+" מסמן איבר נלווה: המזון אינו עובר בו, אבל הוא מפריש לצינור העיכול אנזימי עיכול או מרה.';
+}
+// תחנת התריסריון באדם: מרה מכיס המרה (ירוק) ומיץ לבלב (סגול) זורמים לתריסריון
+function secretions(on) {
+  const svg = $('fig').querySelector('svg'); const old = svg.querySelector('#secr'); if (old) old.remove(); if (!on) return;
+  const g = el('g', { id: 'secr' }, svg);
+  const P = [['M166 258 Q172 282 188 300', '#3f7a2a', 4], ['M250 300 L196 306', '#7b4fb8', 4]];
+  P.forEach(([d, c, w]) => {
+    el('path', { d, fill: 'none', stroke: c, 'stroke-width': w, 'stroke-dasharray': '3 3' }, g);
+    ['0s', '-1s'].forEach(b => { const dot = el('circle', { r: 5, fill: c, stroke: '#fff', 'stroke-width': 1.5 }, g); el('animateMotion', { dur: '2s', begin: b, repeatCount: 'indefinite', path: d }, dot) });
+  });
+  const t1 = el('text', { x: 120, y: 290, class: 'tagname', style: 'fill:#3f7a2a' }, g); t1.textContent = 'מרה';
+  const t2 = el('text', { x: 300, y: 318, class: 'tagname', style: 'fill:#7b4fb8' }, g); t2.textContent = 'מיץ לבלב';
 }
 function endNote() {
   const t = { human: 'באדם התאית אינה מתפרקת, כי לאדם אין צלולאז. היא יוצאת בצואה.', bird: 'בעוף הקורקבן מחליף את השיניים. רק מעט מהתאית מותסס, במעיים העיוורים.', cow: 'בפרה רוב התאית מתפרקת בכרס בעזרת המיקרואורגניזמים, והאנרגיה נספגת כחומצות שומן נדיפות. זה הפתרון לחידה מ"התזונאי של הרפת": איך פרה חיה מקש ושחת.' }[A];
