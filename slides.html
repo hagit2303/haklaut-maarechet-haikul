@@ -12,26 +12,82 @@
 body{padding:0;overflow:hidden;height:100vh;height:100dvh}
 .deck{height:100vh;height:100dvh;display:flex;flex-direction:column}
 .top{display:flex;align-items:center;gap:10px;padding:8px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.top .brand{font-family:var(--f-display);color:var(--accent);margin-inline-end:auto}
-.prog{height:4px;background:var(--line)}.prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.top .brand{font-family:var(--f-display);color:var(--accent);margin-inline-end:auto;font-size:1.15rem}
+.prog{height:6px;background:var(--line)}.prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
 .slides{flex:1;position:relative;overflow:hidden}
-.slide{position:absolute;inset:0;overflow-y:auto;padding:22px max(16px,calc((100% - 980px)/2)) 80px;display:none}
-.slide.on{display:block;animation:fadein .35s}
-@keyframes fadein{from{opacity:0;transform:translateY(8px)}}
-@media (prefers-reduced-motion:reduce){.slide.on{animation:none}}
-.slide h2{font-size:clamp(1.6rem,4.2vw,2.5rem);color:var(--accent);margin-bottom:12px;display:flex;gap:12px;align-items:center}
-.slide h2 .eartag{width:44px;height:50px;font-size:1.2rem;border-radius:12px 12px 18px 18px}
-.slide h2 .eartag span{margin-top:12px}
-.slide p,.slide li{font-size:clamp(1rem,2.2vw,1.2rem);max-width:70ch}
-.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px;align-items:start}
-.big{font-size:clamp(2rem,6vw,3.6rem)!important;font-family:var(--f-display);color:var(--accent);line-height:1.15}
-.pill{display:inline-block;background:var(--tag);color:var(--tag-ink);border-radius:999px;padding:2px 12px;font-weight:800}
-.nav{position:fixed;bottom:14px;inset-inline-start:16px;display:flex;gap:8px;z-index:5}
-.nav button{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:10px 16px;font-weight:800}
+.slide{position:absolute;inset:0;overflow-y:auto;padding:26px max(20px,calc((100% - 1200px)/2)) 96px;display:none}
+.slide.on{display:block;animation:fadein .4s}
+@keyframes fadein{from{opacity:0;transform:translateY(10px)}}
+/* גופן גדול לכיתה */
+.slide{font-size:clamp(1.3rem,2.5vw,1.95rem);line-height:1.5}
+.slide h2{font-size:clamp(2.1rem,4.8vw,3.4rem);color:var(--accent);margin-bottom:18px;display:flex;gap:14px;align-items:center}
+.slide h2 .eartag{width:58px;height:66px;font-size:1.5rem;border-radius:14px 14px 22px 22px;flex:none}
+.slide h2 .eartag::before{top:8px;width:9px;height:9px}.slide h2 .eartag span{margin-top:16px}
+.slide p,.slide li{max-width:none;margin:.35em 0}
+.slide ul,.slide ol{padding-inline-start:1.2em;margin:.3em 0}
+.slide li::marker{color:var(--accent)}
+.slide b{color:var(--accent)}
+.slide .note{font-size:.92em;padding:14px 18px;border-radius:16px}
+.slide .tbl table{font-size:clamp(1.05rem,2vw,1.5rem);min-width:560px}
+.slide .tbl th,.slide .tbl td{padding:10px 14px}
+.big{font-size:clamp(3rem,8vw,5.6rem)!important;font-family:var(--f-display);color:var(--accent);line-height:1.05;margin:.1em 0}
+.split{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:center}
+.split.wide{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+@media (max-width:820px){.split,.split.wide{grid-template-columns:1fr}}
+.photo{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:10px;box-shadow:var(--shadow)}
+.photo img{display:block;width:100%;max-height:58vh;object-fit:contain;border-radius:12px;background:#fff}
+.photo figcaption{font-size:.72em;font-weight:700;margin-top:8px;text-align:center}
+.photo .cr{display:block;font-size:.62em;font-weight:400;color:var(--muted)}
+.photo .cr a{color:inherit}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:620px){.pair{grid-template-columns:1fr}}
+.pill{display:inline-block;background:var(--tag);color:var(--tag-ink);border-radius:999px;padding:4px 16px;font-weight:800;margin:4px}
+.cards4{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:16px;margin-top:10px}
+.cards4 div{background:var(--paper);border:2px solid var(--line);border-radius:18px;padding:18px;text-align:center}
+.cards4 .ic{font-size:2.6em;display:block}
+.cards4 b{display:block;font-size:1.1em}
+.cards4 small{font-size:.75em;color:var(--muted);display:block}
+/* חשיפה הדרגתית */
+.f{opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s}
+.f.in{opacity:1;transform:none}
+.nav{position:fixed;bottom:16px;inset-inline-start:18px;display:flex;gap:10px;z-index:5}
+.nav button{background:var(--accent);color:#fff;border:0;border-radius:14px;padding:12px 22px;font-weight:800;font-size:1.3rem}
 .nav button[disabled]{opacity:.35}
-.num{position:fixed;bottom:22px;inset-inline-end:16px;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
-.slide .dg{max-height:52vh}
-.tbl td,.tbl th{font-size:clamp(.85rem,1.8vw,1rem)}
+.num{position:fixed;bottom:26px;inset-inline-end:18px;color:var(--muted);font-weight:800;font-variant-numeric:tabular-nums;font-size:1.1rem}
+.slide .dg{max-height:60vh}
+.dg .lbl{font-size:15px}
+/* הנפשות */
+.anim{width:100%;height:auto;display:block;max-height:52vh}
+.anim text{font-family:var(--f-body);font-weight:800;fill:var(--ink)}
+@keyframes splitA{0%,25%{transform:translate(0,0)}55%,100%{transform:translate(var(--dx),var(--dy))}}
+.cubes rect{animation:splitA 4s ease-in-out infinite;fill:#e3c06a;stroke:#a8862a;stroke-width:2}
+@keyframes beadOff{0%,30%{transform:translate(0,0)}60%,100%{transform:translate(var(--dx),var(--dy))}}
+.beads circle{fill:#7fae5a;stroke:#4f7a32;stroke-width:2;animation:beadOff 4s ease-in-out infinite}
+.beads line{stroke:#4f7a32;stroke-width:5;animation:linkGone 4s ease-in-out infinite}
+@keyframes linkGone{0%,30%{opacity:1}45%,100%{opacity:0}}
+.enz{animation:enzMove 4s ease-in-out infinite}
+@keyframes enzMove{0%{transform:translateX(-40px)}40%{transform:translateX(150px)}100%{transform:translateX(150px);opacity:0}}
+.fatbig{fill:#f2c94c;stroke:#c9a21a;stroke-width:2;animation:fatShrink 6s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+@keyframes fatShrink{0%,15%{opacity:1;transform:scale(1)}30%,100%{opacity:0;transform:scale(.3)}}
+.drop{fill:#f2c94c;stroke:#c9a21a;stroke-width:1.5;opacity:0;animation:dropOut 6s ease-in-out infinite}
+@keyframes dropOut{0%,22%{opacity:0;transform:translate(0,0)}35%,62%{opacity:1;transform:translate(var(--dx),var(--dy))}80%,100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.2)}}
+.prod{opacity:0;animation:prodIn 6s ease-in-out infinite}
+@keyframes prodIn{0%,66%{opacity:0}78%,100%{opacity:1}}
+.bile{fill:#7fae5a;animation:bileIn 6s ease-in-out infinite}
+@keyframes bileIn{0%{transform:translateX(-120px);opacity:0}15%{opacity:1}30%,100%{transform:translateX(0);opacity:0}}
+.nutdot{animation:absorb 3s linear infinite}
+@keyframes absorb{0%{transform:translateY(0);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateY(-120px);opacity:0}}
+.microbe{animation:wob 1.6s ease-in-out infinite alternate}
+@keyframes wob{to{transform:translate(4px,-3px)}}
+.vfa{fill:#e58a7c;animation:toBlood 4s ease-in infinite}
+@keyframes toBlood{0%{transform:translate(0,0);opacity:0}15%{opacity:1}100%{transform:translate(0,-150px);opacity:0}}
+.gas{fill:#dfe9f7;stroke:#7a96c2;stroke-width:1.5;animation:burp 4.5s ease-in infinite}
+@keyframes burp{0%{transform:translate(0,0);opacity:0}15%{opacity:1}100%{transform:translate(-120px,-190px);opacity:0}}
+.grass{stroke:#6b8a3e;stroke-width:5;stroke-linecap:round;animation:grassGone 6s linear infinite}
+@keyframes grassGone{0%,20%{opacity:1}70%,100%{opacity:.15}}
+.glc{fill:#f6d77a;stroke:#b28a1d;stroke-width:1.5;animation:glcPop 6s ease-in-out infinite}
+@keyframes glcPop{0%,25%{opacity:0;transform:scale(.4)}40%,70%{opacity:1;transform:scale(1)}85%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.slide.on,.f{animation:none;transition:none}.anim *{animation:none!important}}
 </style>
 </head>
 <body>
@@ -40,227 +96,363 @@ body{padding:0;overflow:hidden;height:100vh;height:100dvh}
   <div class="prog"><i id="bar"></i></div>
   <div class="slides" id="slides">
 
+<!-- 1 -->
 <section class="slide">
-  <span class="label">מדעי החקלאות · יחידה 2</span>
-  <p class="big">מסע המזון</p>
-  <p style="font-size:1.4rem">מערכת העיכול באדם, בעוף ובפרה</p>
-  <div class="note" style="max-width:60ch">🤫 <b>החידה מ"התזונאי של הרפת":</b> פרה חיה ומייצרת חלב ממזון כמו קש ושחת, שאדם אינו מפיק ממנו אנרגיה. איך? בסוף היחידה נבדוק את ההשערה שכתבתם.</div>
-</section>
-
-<section class="slide">
-  <h2><span class="eartag"><span>1</span></span>מה קורה למזון?</h2>
-  <p>רכיבי המזון הגדולים (עמילן, חלבונים, שומנים) אינם עוברים דרך דופן צינור העיכול. במערכת העיכול מתרחשים ארבעה תהליכים:</p>
-  <div class="flow">
-    <div class="node"><b>פירוק מכני</b>לעיסה, ערבוב וטחינה</div><span class="arr">←</span>
-    <div class="node"><b>פירוק כימי</b>אנזימים מפרקים מולקולות גדולות ליחידות מבנה</div><span class="arr">←</span>
-    <div class="node"><b>ספיגה</b>יחידות המבנה עוברות דרך דופן המעי אל הדם</div><span class="arr">←</span>
-    <div class="node"><b>הוצאה</b>שאריות שלא נעכלו יוצאות כצואה</div>
+  <div class="split">
+    <div>
+      <span class="label">מדעי החקלאות · יחידה 2</span>
+      <p class="big">מסע המזון</p>
+      <p style="font-size:1.25em">מערכת העיכול באדם, בעוף ובפרה</p>
+      <div class="note f">🤫 <b>החידה מ"התזונאי של הרפת":</b> פרה חיה ומייצרת חלב ממזון כמו קש ושחת, שאדם אינו מפיק ממנו אנרגיה. איך?</div>
+    </div>
+    <figure class="photo"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Cows_chewing_the_cud_near_Puriton_-_geograph.org.uk_-_6138906.jpg/1280px-Cows_chewing_the_cud_near_Puriton_-_geograph.org.uk_-_6138906.jpg" alt="פרות שרועות בשדה ומעלות גירה"><figcaption>פרות מעלות גירה<span class="cr">צילום: Neil Owen · <a href="https://commons.wikimedia.org/wiki/File:Cows_chewing_the_cud_near_Puriton_-_geograph.org.uk_-_6138906.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 2.0</span></figcaption></figure>
   </div>
 </section>
 
+<!-- 2 -->
 <section class="slide">
-  <h2><span class="eartag"><span>2</span></span>פירוק מכני לעומת פירוק כימי</h2>
-  <div class="tbl"><table>
-    <tr><th></th><th>פירוק מכני</th><th>פירוק כימי</th></tr>
-    <tr><td>מה קורה?</td><td>המזון מתחלק לחתיכות קטנות</td><td>קשרים כימיים נשברים, ונוצרים חומרים אחרים</td></tr>
-    <tr><td>האם החומר משתנה?</td><td>לא. אותו חומר, בחתיכות קטנות יותר</td><td>כן. מעמילן נוצרים סוכרים, מחלבון נוצרות חומצות אמינו</td></tr>
-    <tr><td>מי מבצע?</td><td>שיניים, שרירי הקיבה, הקורקבן</td><td>אנזימי עיכול</td></tr>
-  </table></div>
-  <p class="note">🔑 פירוק מכני מגדיל את <b>היחס בין שטח הפנים לנפח</b>. ככל ששטח הפנים גדול יותר, יותר מולקולות של מזון באות במגע עם אנזימי העיכול, והפירוק הכימי מהיר יותר.</p>
+  <h2><span class="eartag"><span>1</span></span>מה קורה למזון?</h2>
+  <p>עמילן, חלבונים ושומנים הם מולקולות גדולות. הן אינן עוברות דרך דופן צינור העיכול.</p>
+  <div class="cards4">
+    <div class="f"><span class="ic">🦷</span><b>פירוק מכני</b><small>לעיסה, ערבוב וטחינה</small></div>
+    <div class="f"><span class="ic">✂️</span><b>פירוק כימי</b><small>אנזימים מפרקים מולקולות גדולות ליחידות מבנה</small></div>
+    <div class="f"><span class="ic">🩸</span><b>ספיגה</b><small>יחידות המבנה עוברות דרך דופן המעי אל הדם</small></div>
+    <div class="f"><span class="ic">🚽</span><b>הוצאה</b><small>שאריות שלא נעכלו יוצאות כצואה</small></div>
+  </div>
 </section>
 
+<!-- 3 -->
+<section class="slide">
+  <h2><span class="eartag"><span>2</span></span>פירוק מכני לעומת פירוק כימי</h2>
+  <div class="pair">
+    <div class="photo">
+      <svg class="anim" viewBox="0 0 300 200" role="img" aria-label="הנפשה: קובייה גדולה מתחלקת לקוביות קטנות">
+        <g class="cubes">
+          <rect x="110" y="60" width="40" height="40" style="--dx:-30px;--dy:-25px"/><rect x="150" y="60" width="40" height="40" style="--dx:30px;--dy:-25px"/>
+          <rect x="110" y="100" width="40" height="40" style="--dx:-30px;--dy:25px"/><rect x="150" y="100" width="40" height="40" style="--dx:30px;--dy:25px"/>
+        </g>
+        <text x="150" y="190" text-anchor="middle" font-size="18">אותו חומר, חתיכות קטנות</text>
+      </svg>
+      <p style="text-align:center"><b>פירוק מכני</b><br><span style="font-size:.8em">החומר לא משתנה. שטח הפנים גדל.</span></p>
+    </div>
+    <div class="photo">
+      <svg class="anim" viewBox="0 0 300 200" role="img" aria-label="הנפשה: אנזים מפרק שרשרת לחוליות נפרדות">
+        <g class="beads">
+          <line x1="70" y1="100" x2="110" y2="100"/><line x1="110" y1="100" x2="150" y2="100"/><line x1="150" y1="100" x2="190" y2="100"/><line x1="190" y1="100" x2="230" y2="100"/>
+          <circle cx="70" cy="100" r="16" style="--dx:-20px;--dy:-30px"/><circle cx="110" cy="100" r="16" style="--dx:-8px;--dy:30px"/><circle cx="150" cy="100" r="16" style="--dx:0px;--dy:-34px"/><circle cx="190" cy="100" r="16" style="--dx:8px;--dy:30px"/><circle cx="230" cy="100" r="16" style="--dx:20px;--dy:-30px"/>
+        </g>
+        <g class="enz"><path d="M40 40 a18 18 0 1 1 0 0.1 Z" fill="none"/><text x="40" y="58" font-size="26">✂️</text></g>
+        <text x="150" y="190" text-anchor="middle" font-size="18">אנזים ← יחידות מבנה</text>
+      </svg>
+      <p style="text-align:center"><b>פירוק כימי</b><br><span style="font-size:.8em">קשרים נשברים, ונוצרים חומרים אחרים.</span></p>
+    </div>
+  </div>
+  <p class="note f">🔑 פירוק מכני מגדיל את <b>שטח הפנים</b>. יותר מולקולות באות במגע עם האנזימים, והפירוק הכימי מהיר יותר.</p>
+</section>
+
+<!-- 4 -->
 <section class="slide">
   <h2><span class="eartag"><span>3</span></span>אנזימי העיכול</h2>
   <div class="tbl"><table>
     <tr><th>אנזים</th><th>מופרש מ...</th><th>מפרק</th><th>התוצר</th></tr>
-    <tr><td>עמילאז</td><td>בלוטות הרוק (באדם), הלבלב</td><td>עמילן</td><td>דו־סוכרים, ובסוף חד־סוכרים</td></tr>
-    <tr><td>פפסין</td><td>דופן הקיבה</td><td>חלבונים</td><td>פפטידים</td></tr>
-    <tr><td>פרוטאזות</td><td>הלבלב, דופן המעי הדק</td><td>חלבונים ופפטידים</td><td>חומצות אמינו</td></tr>
-    <tr><td>ליפאז</td><td>הלבלב</td><td>שומנים</td><td>חומצות שומן וגליצרול</td></tr>
-    <tr><td>צלולאז</td><td><b>מיקרואורגניזמים</b> בכרס (לא בעל החיים עצמו)</td><td>תאית</td><td>גלוקוז</td></tr>
+    <tr class="f"><td>עמילאז</td><td>בלוטות הרוק, הלבלב</td><td>עמילן</td><td>דו־סוכרים ← חד־סוכרים</td></tr>
+    <tr class="f"><td>פפסין</td><td>דופן הקיבה</td><td>חלבונים</td><td>פפטידים</td></tr>
+    <tr class="f"><td>פרוטאזות</td><td>הלבלב, דופן המעי הדק</td><td>חלבונים ופפטידים</td><td>חומצות אמינו</td></tr>
+    <tr class="f"><td>ליפאז</td><td>הלבלב</td><td>שומנים</td><td>חומצות שומן וגליצרול</td></tr>
+    <tr class="f"><td>צלולאז</td><td><b>מיקרואורגניזמים</b> בכרס</td><td>תאית</td><td>גלוקוז</td></tr>
   </table></div>
-  <p class="note">התוצרים הסופיים של העיכול: <b>חד־סוכרים, חומצות אמינו, חומצות שומן וגליצרול</b>. אלה נספגים לדם.</p>
 </section>
 
+<!-- 5 -->
 <section class="slide">
   <h2><span class="eartag"><span>4</span></span>מערכת העיכול באדם</h2>
-  <div class="two">
-    <div id="figHuman"></div>
+  <div class="split">
+    <figure class="photo"><img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Digestive_system_diagram.png" alt="איור של מערכת העיכול באדם עם שמות בעברית"><figcaption>מערכת העיכול באדם<span class="cr">איור: Mariana Ruiz, תרגום לעברית · <a href="https://commons.wikimedia.org/wiki/File:Digestive_system_diagram.png" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 3.0</span></figcaption></figure>
     <div>
-      <p><b>צינור העיכול</b> (המזון עובר בו):<br>פה ← ושט ← קיבה ← תריסריון ← מעי דק ← מעי גס ← פי הטבעת</p>
-      <p><b>איברים נלווים</b>: המזון אינו עובר בהם, אבל הם מפרישים לצינור העיכול:<br>• <b>בלוטות הרוק</b> ← רוק ובו עמילאז<br>• <b>לבלב</b> ← מיץ לבלב ובו אנזימי עיכול (עמילאז, פרוטאזות, ליפאז)<br>• <b>כבד</b> ← מרה (המרה אינה אנזים; היא מתחלבת שומנים)<br>• <b>כיס המרה</b> ← אוגר את המרה ומפריש אותה לתריסריון</p>
-      <p class="note">🔍 בסימולציה: לחצו על כל תחנה ועקבו אחרי כדור המזון.</p>
+      <p class="f"><b>צינור העיכול</b> (המזון עובר בו):<br>פה ← ושט ← קיבה ← תריסריון ← מעי דק ← מעי גס ← פי הטבעת</p>
+      <p class="f"><b>איברים נלווים</b>: המזון אינו עובר בהם, והם מפרישים לצינור העיכול:</p>
+      <ul class="f"><li>בלוטות הרוק ← רוק עם עמילאז</li><li>לבלב ← אנזימי עיכול</li><li>כבד ← מרה</li><li>כיס המרה ← אוגר מרה</li></ul>
     </div>
   </div>
 </section>
 
+<!-- 6 -->
 <section class="slide">
-  <h2><span class="eartag"><span>5</span></span>הפה והשיניים: מבנה ותפקוד</h2>
-  <div class="tbl"><table>
-    <tr><th>סוג שן</th><th>מבנה</th><th>פעולה</th></tr>
-    <tr><td>חותכות</td><td>שטוחות וחדות, בחזית</td><td>חיתוך ראשוני של המזון</td></tr>
-    <tr><td>ניבים</td><td>מחודדות, בצידי החותכות</td><td>שיסוע וקריעה</td></tr>
-    <tr><td>טוחנות</td><td>רחבות, מאחור</td><td>טחינה</td></tr>
-  </table></div>
-  <div class="two">
-    <p>🐕 <b>טורף (כלב):</b> ניבים גדולים וחדים, וטוחנות חדות שחותכות בשר.</p>
-    <p>🐄 <b>אוכל צמחים (פרה):</b> אין ניבים, ובלסת העליונה אין חותכות. במקומן יש כרית שיניים, והטוחנות רחבות.</p>
+  <h2><span class="eartag"><span>5</span></span>המסלול: עקבו אחרי כדור המזון</h2>
+  <div class="split">
+    <div class="photo" id="figRoute"></div>
+    <ol>
+      <li class="f"><b>פה:</b> לעיסה ועמילאז</li>
+      <li class="f"><b>ושט:</b> גלי התכווצות מעבירים את המזון</li>
+      <li class="f"><b>קיבה:</b> ערבוב, חומצה ופפסין</li>
+      <li class="f"><b>תריסריון:</b> אנזימי הלבלב ומרה</li>
+      <li class="f"><b>מעי דק:</b> סוף הפירוק וספיגה</li>
+      <li class="f"><b>מעי גס:</b> ספיגת מים</li>
+      <li class="f"><b>פי הטבעת:</b> הוצאה</li>
+    </ol>
   </div>
-  <p>באדם הרוק מרטיב את המזון, ועמילאז הרוק מתחיל לפרק עמילן.</p>
 </section>
 
+<!-- 7 -->
 <section class="slide">
-  <h2><span class="eartag"><span>6</span></span>הקיבה</h2>
+  <h2><span class="eartag"><span>6</span></span>שיניים: מבנה ותפקוד</h2>
+  <div class="pair">
+    <figure class="photo"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Dog_skull._Canis_lupus_familiaris_01.jpg/1280px-Dog_skull._Canis_lupus_familiaris_01.jpg" alt="גולגולת של כלב עם ניבים גדולים"><figcaption>🐕 טורף (כלב): ניבים גדולים וחדים<span class="cr">צילום: Wagner Souza e Silva · <a href="https://commons.wikimedia.org/wiki/File:Dog_skull._Canis_lupus_familiaris_01.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 4.0</span></figcaption></figure>
+    <figure class="photo"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/Bos_sp._%28cow%29_cranium_4_%2846935058024%29.jpg/1280px-Bos_sp._%28cow%29_cranium_4_%2846935058024%29.jpg" alt="גולגולת של פרה, בלי שיניים חותכות בלסת העליונה"><figcaption>🐄 אוכלת צמחים (פרה): אין חותכות עליונות, טוחנות רחבות<span class="cr">צילום: James St. John · <a href="https://commons.wikimedia.org/wiki/File:Bos_sp._(cow)_cranium_4_(46935058024).jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY 2.0</span></figcaption></figure>
+  </div>
+  <p class="f">🦷 <b>חותכות</b>: חיתוך · <b>ניבים</b>: קריעה · <b>טוחנות</b>: טחינה</p>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <h2><span class="eartag"><span>7</span></span>הקיבה</h2>
   <ul>
-    <li><b>פירוק מכני:</b> שלוש שכבות שרירים בדופן מערבבות את המזון.</li>
-    <li><b>פירוק כימי:</b> מיץ הקיבה מכיל חומצה הידרוכלורית (pH בסביבות 2) ופפסין, שמפרק חלבונים לפפטידים.</li>
-    <li>בכניסה לקיבה וביציאה ממנה יש <b>סוגרים</b>: שרירים טבעתיים שנסגרים בזמן שהמזון בקיבה.</li>
+    <li class="f"><b>פירוק מכני:</b> שלוש שכבות שרירים בדופן מערבבות את המזון.</li>
+    <li class="f"><b>פירוק כימי:</b> חומצה הידרוכלורית (pH בסביבות 2) ו<b>פפסין</b>, שמפרק חלבונים לפפטידים.</li>
+    <li class="f">בכניסה לקיבה וביציאה ממנה יש <b>סוגרים</b>: שרירים טבעתיים.</li>
   </ul>
-  <p class="note">🤔 <b>שאלה למחשבה:</b> מזון עתיר שומן, אלכוהול ועישון מחלישים את הסוגר שבין הוושט לקיבה. מה עלול לקרות? (רמז: צרבת)</p>
+  <p class="note f">🤔 מזון עתיר שומן, אלכוהול ועישון מחלישים את הסוגר שבין הוושט לקיבה. מה עלול לקרות? (רמז: צרבת)</p>
 </section>
 
+<!-- 9 -->
 <section class="slide">
-  <h2><span class="eartag"><span>7</span></span>התריסריון: הלבלב, הכבד והמרה</h2>
+  <h2><span class="eartag"><span>8</span></span>התריסריון: הלבלב, הכבד והמרה</h2>
   <p class="note"><b>בתריסריון מתפרקים פחמימות, חלבונים ושומנים.</b></p>
-  <ul>
-    <li>הלבלב מפריש לתריסריון <b>עמילאז, פרוטאזות וליפאז</b>, וגם ביקרבונט שסותר את החומצה מהקיבה.</li>
-    <li>הכבד מייצר <b>מרה</b>, והמרה נאגרת בכיס המרה.</li>
-    <li><b>מלחי המרה מתחלבים את השומן</b>: מפצלים אותו לטיפות קטנות. שטח הפנים גדל, והליפאז מפרק את השומן מהר יותר.</li>
-  </ul>
-  <p class="note">⚠️ <b>שימו לב:</b> המרה אינה אנזים ואינה מפרקת שומן. היא מתחלבת אותו, והפירוק הכימי נעשה על ידי הליפאז.</p>
-</section>
-
-<section class="slide">
-  <h2><span class="eartag"><span>8</span></span>המעי הדק: סוף העיכול וספיגה</h2>
-  <ul>
-    <li>אנזימים בדופן המעי משלימים את הפירוק ליחידות מבנה.</li>
-    <li>תוצרי העיכול נספגים דרך דופן המעי אל הדם.</li>
-    <li>הדופן מקופלת ומכוסה <b>סיסים</b>, ועל התאים יש מיקרו־סיסים. כך שטח הפנים לספיגה גדול מאוד.</li>
-  </ul>
-  <h2 style="font-size:1.5rem;margin-top:14px">המעי הגס</h2>
-  <ul>
-    <li>נספגים בו המים והמלחים שנותרו, והשאריות מתעבות לצואה.</li>
-    <li>חיים בו חיידקים רבים, שמייצרים ויטמינים, למשל ויטמין K.</li>
-    <li><b>התאית אינה מתפרקת באדם</b>, כי לאדם אין צלולאז. היא יוצאת בצואה.</li>
-  </ul>
-</section>
-
-<section class="slide">
-  <h2><span class="eartag"><span>9</span></span>סיכום: מה מתפרק ואיפה (אדם)</h2>
-  <div class="tbl"><table>
-    <tr><th>איבר</th><th>פירוק מכני</th><th>פחמימות</th><th>חלבונים</th><th>שומנים</th><th>ספיגה</th></tr>
-    <tr><td>פה</td><td>✔</td><td>✔ עמילאז</td><td></td><td></td><td></td></tr>
-    <tr><td>קיבה</td><td>✔</td><td></td><td>✔ פפסין</td><td></td><td></td></tr>
-    <tr><td>תריסריון</td><td></td><td>✔ עמילאז</td><td>✔ פרוטאזות</td><td>✔ ליפאז (ומרה)</td><td></td></tr>
-    <tr><td>מעי דק</td><td></td><td>✔</td><td>✔</td><td>✔</td><td>✔ תוצרי העיכול</td></tr>
-    <tr><td>מעי גס</td><td></td><td></td><td></td><td></td><td>✔ מים ומלחים</td></tr>
-    <tr><th>תוצר סופי</th><th></th><th>חד־סוכרים</th><th>חומצות אמינו</th><th>חומצות שומן + גליצרול</th><th></th></tr>
-  </table></div>
-</section>
-
-<section class="slide">
-  <h2><span class="eartag"><span>10</span></span>מערכת העיכול בעוף</h2>
-  <div class="two">
-    <div id="figBird"></div>
+  <div class="split">
+    <div class="photo">
+      <svg class="anim" viewBox="0 0 320 210" role="img" aria-label="הנפשה: מרה מפצלת טיפת שומן לטיפות קטנות, וליפאז מפרק אותן">
+        <circle class="bile" cx="160" cy="95" r="10"/>
+        <circle class="fatbig" cx="160" cy="95" r="52"/>
+        <circle class="drop" cx="160" cy="95" r="14" style="--dx:-70px;--dy:-40px"/><circle class="drop" cx="160" cy="95" r="14" style="--dx:0px;--dy:-60px"/><circle class="drop" cx="160" cy="95" r="14" style="--dx:70px;--dy:-40px"/>
+        <circle class="drop" cx="160" cy="95" r="14" style="--dx:-75px;--dy:30px"/><circle class="drop" cx="160" cy="95" r="14" style="--dx:0px;--dy:55px"/><circle class="drop" cx="160" cy="95" r="14" style="--dx:75px;--dy:30px"/>
+        <g class="prod"><text x="160" y="90" text-anchor="middle" font-size="17">חומצות שומן</text><text x="160" y="114" text-anchor="middle" font-size="17">+ גליצרול</text></g>
+        <text x="160" y="200" text-anchor="middle" font-size="15">מרה מתחלבת ← ליפאז מפרק</text>
+      </svg>
+    </div>
     <ul>
-      <li><b>מקור:</b> אין שיניים. המזון נבלע כמעט שלם.</li>
-      <li><b>זפק:</b> הרחבה של הוושט. המזון נאגר בו, סופג מים ומתרכך.</li>
-      <li><b>קיבה בלוטית:</b> מפרישה חומצה ופפסין.</li>
-      <li><b>קורקבן (קיבת שרירים):</b> דופן שרירית עבה וחצץ, ובו מתרחש פירוק מכני. אינו מפריש אנזימים.</li>
-      <li><b>מעי דק:</b> סוף הפירוק הכימי וספיגה.</li>
-      <li><b>מעיים עיוורים:</b> חיידקים מתסיסים מעט סיבים.</li>
-      <li><b>ביב:</b> פתח משותף למערכת העיכול, למערכת השתן ולמערכת הרבייה.</li>
+      <li class="f"><b>לבלב</b> ← מיץ לבלב: עמילאז, פרוטאזות, ליפאז, וביקרבונט</li>
+      <li class="f"><b>כבד</b> מייצר מרה; <b>כיס המרה</b> אוגר אותה</li>
+      <li class="f"><b>מלחי מרה מתחלבים שומן</b>: טיפה גדולה ← טיפות קטנות</li>
+    </ul>
+  </div>
+  <p class="note f">⚠️ המרה אינה אנזים ואינה מפרקת שומן. הליפאז מפרק אותו.</p>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+  <h2><span class="eartag"><span>9</span></span>המעי הדק: סוף העיכול וספיגה</h2>
+  <div class="split">
+    <div class="photo">
+      <svg class="anim" viewBox="0 0 320 230" role="img" aria-label="הנפשה: סיסים במעי הדק ותוצרי עיכול שעוברים לדם">
+        <rect x="0" y="180" width="320" height="50" fill="#f6d8cf"/>
+        <text x="160" y="214" text-anchor="middle" font-size="15">חלל המעי: תוצרי עיכול</text>
+        <g fill="#e7a58f" stroke="#a85a45" stroke-width="2">
+          <path d="M20 180 V70 a20 20 0 0 1 40 0 V180"/><path d="M90 180 V60 a20 20 0 0 1 40 0 V180"/><path d="M160 180 V70 a20 20 0 0 1 40 0 V180"/><path d="M230 180 V60 a20 20 0 0 1 40 0 V180"/>
+        </g>
+        <g stroke="#c0392b" stroke-width="3" fill="none"><path d="M40 178 V80"/><path d="M110 178 V70"/><path d="M180 178 V80"/><path d="M250 178 V70"/></g>
+        <circle class="nutdot" cx="40" cy="190" r="5" fill="#f2c94c"/><circle class="nutdot" cx="110" cy="190" r="5" fill="#7fae5a" style="animation-delay:.7s"/><circle class="nutdot" cx="180" cy="190" r="5" fill="#e58a7c" style="animation-delay:1.4s"/><circle class="nutdot" cx="250" cy="190" r="5" fill="#f2c94c" style="animation-delay:2.1s"/>
+        <text x="160" y="24" text-anchor="middle" font-size="15">סיסים · כלי דם (אדום)</text>
+      </svg>
+    </div>
+    <ul>
+      <li class="f">אנזימים בדופן משלימים את הפירוק ליחידות מבנה.</li>
+      <li class="f">חד־סוכרים, חומצות אמינו, חומצות שומן וגליצרול <b>נספגים לדם</b>.</li>
+      <li class="f">הדופן מקופלת ומכוסה <b>סיסים</b> ← שטח פנים גדול מאוד לספיגה.</li>
     </ul>
   </div>
 </section>
 
+<!-- 11 -->
 <section class="slide">
-  <h2><span class="eartag"><span>11</span></span>הפרה: מעלת גירה</h2>
-  <div id="figCow"></div>
-  <p>קיבה אחת בעלת <b>ארבעה מדורים</b>: <span class="pill">כרס</span> <span class="pill">בית הכוסות</span> <span class="pill">המסס (קיבת העלעלים)</span> <span class="pill">קבה (קיבה אמיתית)</span>. רק הקבה מפרישה מיצי עיכול.</p>
-</section>
-
-<section class="slide">
-  <h2><span class="eartag"><span>12</span></span>הכרס: עיכול סימביוטי</h2>
-  <div class="flow">
-    <div class="node"><b>מיקרואורגניזמים</b>חיידקים, חד־תאיים ופטריות בכרס</div><span class="arr">←</span>
-    <div class="node"><b>צלולאז</b>מפרק תאית לגלוקוז</div><span class="arr">←</span>
-    <div class="node"><b>תסיסה</b>המיקרואורגניזמים מתסיסים את הגלוקוז</div><span class="arr">←</span>
-    <div class="node"><b>חומצות שומן נדיפות</b>נספגות דרך דופן הכרס לדם: מקור האנרגיה העיקרי של הפרה</div>
-  </div>
+  <h2><span class="eartag"><span>10</span></span>המעי הגס</h2>
   <ul>
-    <li>הפרה עצמה אינה מייצרת צלולאז. היחסים בין הפרה למיקרואורגניזמים הם <b>סימביוזה</b>.</li>
-    <li>המיקרואורגניזמים בונים גם חלבון משלהם. בהמשך, בקבה ובמעי הדק, החלבון הזה מתפרק ונספג.</li>
-    <li>בתסיסה נוצרים גם גזים, פחמן דו־חמצני ומתאן, שנפלטים בגיהוק.</li>
-    <li>אנטיביוטיקה במינון גבוה פוגעת במיקרואורגניזמים בכרס, וכתוצאה מכך עיכול התאית נפגע. (בגרות 2016)</li>
+    <li class="f">נספגים בו <b>המים והמלחים שנותרו</b>, והשאריות מתעבות לצואה.</li>
+    <li class="f">חיים בו חיידקים רבים, שמייצרים ויטמינים, למשל ויטמין K.</li>
+    <li class="f"><b>התאית אינה מתפרקת באדם</b>, כי לאדם אין צלולאז. היא יוצאת בצואה.</li>
   </ul>
 </section>
 
+<!-- 12 -->
 <section class="slide">
-  <h2><span class="eartag"><span>13</span></span>העלאת גירה, רוק וסיבים</h2>
-  <ol>
-    <li>הפרה לועסת לעיסה קצרה ובולעת. המזון מגיע לכרס.</li>
-    <li>התכווצויות הכרס ובית הכוסות מחזירות מנות מזון לפה.</li>
-    <li>לעיסה חוזרת, ממושכת ויסודית, והפרשת רוק רב. החלקיקים קטנים יותר, שטח הפנים גדל, והפירוק בכרס מהיר יותר.</li>
-    <li>המזון נבלע שוב. חלקיקים קטנים עוברים להמסס, שם נספגים מים, ואז לקבה.</li>
-  </ol>
-  <p class="note">🧪 הרוק של הפרה מכיל ביקרבונט, ששומר על pH קרוב לניטרלי בכרס. מנה עשירה בסיבים מגדילה את זמן העלאת הגירה ואת כמות הרוק. (בגרות 2019)</p>
-  <p class="note">🧲 חפצי מתכת שהפרה בולעת שוקעים בבית הכוסות. ברפתות מחדירים לפרות מגנט שנשאר שם ואוסף אותם.</p>
-</section>
-
-<section class="slide">
-  <h2><span class="eartag"><span>14</span></span>הכרס והסביבה: מתאן</h2>
-  <ul>
-    <li>בכרס חיים <b>ארכאונים מתאנוגניים</b>. הם יוצרים מתאן ממימן ומפחמן דו־חמצני שנוצרים בתסיסה.</li>
-    <li>המתאן נפלט מהפרה בעיקר בגיהוק. מתאן הוא <b>גז חממה</b>, ולכן גידול מעלי גירה תורם לשינוי האקלים.</li>
-    <li>דרכים שנבדקות לצמצום הפליטה: שינוי הרכב מנת המזון, תוספי מזון שמעכבים את יצירת המתאן, וטיפוח גנטי.</li>
-  </ul>
-  <p class="note">📰 משימת חקר מתוכנית הלימודים: חפשו מאמר על פתרון אחד לצמצום פליטת המתאן מפרות, והציגו אותו בכיתה.</p>
-</section>
-
-<section class="slide">
-  <h2><span class="eartag"><span>15</span></span>השוואה: אדם, עוף ופרה</h2>
+  <h2><span class="eartag"><span>11</span></span>סיכום: מה מתפרק ואיפה (אדם)</h2>
   <div class="tbl"><table>
-    <tr><th></th><th>🧍 אדם</th><th>🐔 עוף</th><th>🐄 פרה</th></tr>
-    <tr><td>פירוק מכני</td><td>שיניים</td><td>קורקבן וחצץ</td><td>שיניים + העלאת גירה</td></tr>
-    <tr><td>אגירה</td><td>קיבה</td><td>זפק</td><td>כרס</td></tr>
-    <tr><td>מיצי קיבה</td><td>קיבה</td><td>קיבה בלוטית</td><td>קבה</td></tr>
-    <tr><td>פירוק תאית</td><td>אין (לאדם אין צלולאז)</td><td>מעט, במעיים העיוורים</td><td>רב, בכרס (עיכול סימביוטי)</td></tr>
-    <tr><td>עיקר הספיגה</td><td>מעי דק</td><td>מעי דק</td><td>דופן הכרס (חומצות שומן נדיפות) + מעי דק</td></tr>
-    <tr><td>פתח יציאה</td><td>פי הטבעת</td><td>ביב</td><td>פי הטבעת</td></tr>
+    <tr><th>איבר</th><th>פירוק מכני</th><th>פחמימות</th><th>חלבונים</th><th>שומנים</th><th>ספיגה</th></tr>
+    <tr class="f"><td>פה</td><td>✔</td><td>✔ עמילאז</td><td></td><td></td><td></td></tr>
+    <tr class="f"><td>קיבה</td><td>✔</td><td></td><td>✔ פפסין</td><td></td><td></td></tr>
+    <tr class="f"><td>תריסריון</td><td></td><td>✔ עמילאז</td><td>✔ פרוטאזות</td><td>✔ ליפאז + מרה</td><td></td></tr>
+    <tr class="f"><td>מעי דק</td><td></td><td>✔</td><td>✔</td><td></td><td>✔ תוצרי העיכול</td></tr>
+    <tr class="f"><td>מעי גס</td><td></td><td></td><td></td><td></td><td>✔ מים ומלחים</td></tr>
+    <tr class="f"><th>תוצר סופי</th><th></th><th>חד־סוכרים</th><th>חומצות אמינו</th><th>חומצות שומן + גליצרול</th><th></th></tr>
   </table></div>
 </section>
 
+<!-- 13 -->
 <section class="slide">
-  <h2><span class="eartag"><span>16</span></span>חזרה לחידה</h2>
-  <p class="big" style="font-size:clamp(1.4rem,4vw,2.2rem)!important">איך פרה חיה מקש ושחת, ואדם לא?</p>
-  <p>לאדם אין אנזים שמפרק תאית, ולכן התאית יוצאת בצואה. בכרס של הפרה חיים מיקרואורגניזמים שמפרישים צלולאז ומפרקים את התאית. את הגלוקוז שנוצר הם מתסיסים לחומצות שומן נדיפות, והן נספגות לדם הפרה ומשמשות מקור אנרגיה.</p>
-  <p class="note">✍️ חזרו להשערה שכתבתם ב"התזונאי של הרפת". האם היא נתמכת בהסבר הזה? מה הייתם משנים?</p>
+  <h2><span class="eartag"><span>12</span></span>מערכת העיכול בעוף</h2>
+  <div class="split wide">
+    <div class="photo" id="figBird"></div>
+    <ul>
+      <li class="f"><b>מקור</b>: אין שיניים</li>
+      <li class="f"><b>זפק</b>: אגירה וריכוך</li>
+      <li class="f"><b>קיבה בלוטית</b>: חומצה ופפסין</li>
+      <li class="f"><b>קורקבן</b>: טחינה עם חצץ</li>
+      <li class="f"><b>מעי דק</b>: פירוק וספיגה</li>
+      <li class="f"><b>מעיים עיוורים</b>: חיידקים</li>
+      <li class="f"><b>ביב</b>: פתח משותף</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="slide">
+  <h2><span class="eartag"><span>13</span></span>בעוף, במציאות: זפק וקורקבן</h2>
+  <div class="pair">
+    <figure class="photo"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Ingewanden_kip_krop_geopend.jpg/1280px-Ingewanden_kip_krop_geopend.jpg" alt="זפק של תרנגולת פתוח ובו גרעינים"><figcaption>זפק פתוח: מלא גרעינים שנאגרו בו<span class="cr">צילום: Arie M den Toom · <a href="https://commons.wikimedia.org/wiki/File:Ingewanden_kip_krop_geopend.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 4.0</span></figcaption></figure>
+    <figure class="photo"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/Gizzard_and_its_components.jpg/1280px-Gizzard_and_its_components.jpg" alt="קורקבן פתוח ובו מזון טחון וחצץ"><figcaption>קורקבן פתוח: דופן שרירית עבה, ובפנים מזון טחון וחצץ<span class="cr">צילום: MEvalyn · <a href="https://commons.wikimedia.org/wiki/File:Gizzard_and_its_components.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY 4.0</span></figcaption></figure>
+  </div>
+</section>
+
+<!-- 15 -->
+<section class="slide">
+  <h2><span class="eartag"><span>14</span></span>הפרה: מעלת גירה</h2>
+  <div id="figCow" class="photo"></div>
+  <p class="f">קיבה אחת בעלת <b>ארבעה מדורים</b>: <span class="pill">כרס</span><span class="pill">בית הכוסות</span><span class="pill">המסס</span><span class="pill">קבה</span></p>
+  <p class="f">רק <b>הקבה</b> (הקיבה האמיתית) מפרישה מיצי עיכול.</p>
+</section>
+
+<!-- 16 -->
+<section class="slide">
+  <h2><span class="eartag"><span>15</span></span>הכרס: עיכול סימביוטי</h2>
+  <div class="split">
+    <div class="photo">
+      <svg class="anim" viewBox="0 0 340 290" role="img" aria-label="הנפשה: מיקרואורגניזמים בכרס מפרקים תאית, חומצות שומן נדיפות נספגות לדם וגזים נפלטים">
+        <rect x="0" y="0" width="340" height="40" fill="#f6d8cf"/><text x="170" y="26" text-anchor="middle" font-size="16">דם</text>
+        <ellipse cx="170" cy="160" rx="160" ry="92" fill="#cfe0b0" stroke="#6b8a3e" stroke-width="3"/>
+        <g><line class="grass" x1="60" y1="150" x2="120" y2="135"/><line class="grass" x1="200" y1="190" x2="270" y2="170"/><line class="grass" x1="110" y1="200" x2="170" y2="215"/></g>
+        <g class="microbe"><ellipse cx="95" cy="170" rx="11" ry="7" fill="#5b7fb8"/><ellipse cx="230" cy="140" rx="11" ry="7" fill="#5b7fb8"/><ellipse cx="160" cy="185" rx="11" ry="7" fill="#5b7fb8"/></g>
+        <g><polygon class="glc" points="140,130 150,124 160,130 160,142 150,148 140,142"/><polygon class="glc" points="250,190 260,184 270,190 270,202 260,208 250,202" style="animation-delay:.5s"/></g>
+        <circle class="vfa" cx="120" cy="80" r="6"/><circle class="vfa" cx="220" cy="80" r="6" style="animation-delay:1.3s"/><circle class="vfa" cx="170" cy="80" r="6" style="animation-delay:2.6s"/>
+        <circle class="gas" cx="70" cy="110" r="9"/><circle class="gas" cx="90" cy="120" r="6" style="animation-delay:2s"/>
+        <text x="170" y="262" text-anchor="middle" font-size="14">🔵 מיקרואורגניזמים · 🟡 גלוקוז</text><text x="170" y="280" text-anchor="middle" font-size="14">🔴 חומצות שומן נדיפות · ⚪ גזים</text>
+      </svg>
+    </div>
+    <ol>
+      <li class="f">מיקרואורגניזמים מפרישים <b>צלולאז</b> ← תאית מתפרקת לגלוקוז</li>
+      <li class="f">הם מתסיסים את הגלוקוז ← <b>חומצות שומן נדיפות</b></li>
+      <li class="f">חומצות השומן הנדיפות <b>נספגות דרך דופן הכרס</b> לדם</li>
+      <li class="f">גזים (פחמן דו־חמצני ומתאן) נפלטים בגיהוק</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 17 -->
+<section class="slide">
+  <h2><span class="eartag"><span>16</span></span>במציאות: בית הכוסות והמסס</h2>
+  <div class="pair">
+    <figure class="photo"><img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Reticulum-honeycomb2.jpg" alt="דופן בית הכוסות במבנה של חלת דבש"><figcaption>בית הכוסות: דופן כמו חלת דבש<span class="cr"><a href="https://commons.wikimedia.org/wiki/File:Reticulum-honeycomb2.jpg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 3.0</span></figcaption></figure>
+    <figure class="photo"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Didactic_model_of_a_bovine_omasum_and_abomasum-FMVZ_USP-26.jpeg/1280px-Didactic_model_of_a_bovine_omasum_and_abomasum-FMVZ_USP-26.jpeg" alt="מודל של המסס העגול והקבה המוארכת"><figcaption>המסס (העגול) והקבה (המוארכת)<span class="cr">צילום: Wagner Souza e Silva · <a href="https://commons.wikimedia.org/wiki/File:Didactic_model_of_a_bovine_omasum_and_abomasum-FMVZ_USP-26.jpeg" target="_blank" rel="noopener">ויקישיתוף</a> · CC BY-SA 4.0</span></figcaption></figure>
+  </div>
+  <p class="f">🧲 חפצי מתכת שהפרה בולעת שוקעים בבית הכוסות. ברפתות מחדירים לפרות מגנט שנשאר שם.</p>
+</section>
+
+<!-- 18 -->
+<section class="slide">
+  <h2><span class="eartag"><span>17</span></span>העלאת גירה</h2>
+  <div class="split wide">
+    <div class="photo" id="figRumin"></div>
+    <ol>
+      <li class="f">לעיסה קצרה ובליעה ← הכרס</li>
+      <li class="f">מנות מזון חוזרות לפה</li>
+      <li class="f">לעיסה חוזרת ורוק רב ← חלקיקים קטנים, שטח פנים גדול</li>
+      <li class="f">בליעה שוב ← המסס ← הקבה</li>
+    </ol>
+  </div>
+  <p class="note f">🧪 הרוק מכיל <b>ביקרבונט</b>, ששומר על pH קרוב לניטרלי בכרס.</p>
+</section>
+
+<!-- 19 -->
+<section class="slide">
+  <h2><span class="eartag"><span>18</span></span>הכרס והסביבה: מתאן</h2>
+  <ul>
+    <li class="f">בכרס חיים <b>ארכאונים</b> שיוצרים מתאן ממימן ומפחמן דו־חמצני שנוצרים בתסיסה.</li>
+    <li class="f">המתאן נפלט בעיקר <b>בגיהוק</b>. מתאן הוא <b>גז חממה</b>.</li>
+    <li class="f">דרכים לצמצום: שינוי מנת המזון, תוספי מזון, טיפוח גנטי.</li>
+  </ul>
+  <p class="note f">📰 משימת חקר: מצאו מאמר על פתרון אחד לצמצום פליטת המתאן מפרות, והציגו אותו בכיתה.</p>
+</section>
+
+<!-- 20 -->
+<section class="slide">
+  <h2><span class="eartag"><span>19</span></span>השוואה: אדם, עוף ופרה</h2>
+  <div class="tbl"><table>
+    <tr><th></th><th>🧍 אדם</th><th>🐔 עוף</th><th>🐄 פרה</th></tr>
+    <tr class="f"><td>פירוק מכני</td><td>שיניים</td><td>קורקבן וחצץ</td><td>שיניים + העלאת גירה</td></tr>
+    <tr class="f"><td>אגירה</td><td>קיבה</td><td>זפק</td><td>כרס</td></tr>
+    <tr class="f"><td>מיצי קיבה</td><td>קיבה</td><td>קיבה בלוטית</td><td>קבה</td></tr>
+    <tr class="f"><td>פירוק תאית</td><td>אין</td><td>מעט (מעיים עיוורים)</td><td>רב, בכרס</td></tr>
+    <tr class="f"><td>עיקר הספיגה</td><td>מעי דק</td><td>מעי דק</td><td>דופן הכרס + מעי דק</td></tr>
+    <tr class="f"><td>פתח יציאה</td><td>פי הטבעת</td><td>ביב</td><td>פי הטבעת</td></tr>
+  </table></div>
+</section>
+
+<!-- 21 -->
+<section class="slide">
+  <h2><span class="eartag"><span>20</span></span>חזרה לחידה</h2>
+  <p class="big" style="font-size:clamp(2rem,5vw,3.2rem)!important">איך פרה חיה מקש, ואדם לא?</p>
+  <p class="f">🧍 לאדם אין צלולאז ← התאית יוצאת בצואה.</p>
+  <p class="f">🐄 בכרס של הפרה מיקרואורגניזמים מפרקים תאית ← תסיסה ← חומצות שומן נדיפות נספגות לדם ← אנרגיה.</p>
+  <p class="note f">✍️ חזרו להשערה שכתבתם ב"התזונאי של הרפת". האם היא נתמכת? מה הייתם משנים?</p>
   <div class="row"><a class="btn" href="sim.html" style="text-decoration:none">🔍 לסימולציה</a><a class="btn tagbtn" href="practice.html" style="text-decoration:none">✍️ לתרגול</a></div>
 </section>
 
   </div>
-  <div class="nav"><button id="prev" aria-label="שקף קודם">→</button><button id="next" aria-label="שקף הבא">←</button></div>
+  <div class="nav"><button id="prev" aria-label="אחורה">→</button><button id="next" aria-label="קדימה">←</button></div>
   <div class="num" id="num"></div>
 </div>
 <script src="assets/digest.js"></script>
 <script>
-// איורים עם שמות החלקים
+const NSs = 'http://www.w3.org/2000/svg';
 function labeled(id, a) {
   const box = document.getElementById(id); box.innerHTML = SVG[a]; const svg = box.querySelector('svg');
-  idParts(a).forEach(p => { const t = document.createElementNS('http://www.w3.org/2000/svg', 'text'); t.setAttribute('x', p.x); t.setAttribute('y', p.y + 4); t.setAttribute('class', 'lbl'); t.textContent = p.name.replace(/ \(.*\)/, ''); svg.appendChild(t) });
+  idParts(a).forEach(p => { const t = document.createElementNS(NSs, 'text'); t.setAttribute('x', p.x); t.setAttribute('y', p.y + 5); t.setAttribute('class', 'lbl'); t.textContent = p.name.replace(/ \(.*\)/, ''); svg.appendChild(t) });
+  return svg;
 }
-labeled('figHuman', 'human'); labeled('figBird', 'bird'); labeled('figCow', 'cow');
+labeled('figBird', 'bird'); labeled('figCow', 'cow');
+// כדור מזון שנע לאורך מסלול העיכול באדם
+(function () {
+  const box = document.getElementById('figRoute'); box.innerHTML = SVG.human; const svg = box.querySelector('svg');
+  const path = 'M180 80 L180 196 Q184 212 205 218 Q262 214 262 252 Q258 282 224 286 Q190 292 188 312 Q188 326 206 326 C150 330 136 346 160 352 S242 360 232 372 S140 382 150 394 S242 402 234 414 S150 422 162 434 S222 444 140 448 L120 448 Q108 448 108 436 L108 342 Q108 330 120 330 L258 330 Q272 330 272 342 L272 440 Q272 470 232 472 Q200 472 198 486 L198 508';
+  const b = document.createElementNS(NSs, 'circle'); b.setAttribute('r', 10); b.setAttribute('fill', '#7a4a2a'); b.setAttribute('stroke', '#fff'); b.setAttribute('stroke-width', 3);
+  const am = document.createElementNS(NSs, 'animateMotion'); am.setAttribute('dur', '12s'); am.setAttribute('repeatCount', 'indefinite'); am.setAttribute('path', path); b.appendChild(am); svg.appendChild(b);
+  idParts('human').forEach(p => { const t = document.createElementNS(NSs, 'text'); t.setAttribute('x', p.x); t.setAttribute('y', p.y + 5); t.setAttribute('class', 'lbl'); t.textContent = p.name; svg.appendChild(t) });
+})();
+// העלאת גירה: כדור מזון עולה מהכרס לפה ויורד חזרה
+(function () {
+  const svg = labeled('figRumin', 'cow');
+  const defs = document.createElementNS(NSs, 'defs'); defs.innerHTML = '<marker id="arrowHead" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="var(--accent)"/></marker>'; svg.prepend(defs);
+  svg.querySelector('#ruminArrow').classList.add('on');
+  const b = document.createElementNS(NSs, 'circle'); b.setAttribute('r', 10); b.setAttribute('fill', '#6b8a3e'); b.setAttribute('stroke', '#fff'); b.setAttribute('stroke-width', 3);
+  const am = document.createElementNS(NSs, 'animateMotion'); am.setAttribute('dur', '6s'); am.setAttribute('repeatCount', 'indefinite'); am.setAttribute('path', 'M340 170 Q330 120 300 104 Q190 52 74 150 L74 150 Q150 150 250 140 Q300 150 340 170'); b.appendChild(am); svg.appendChild(b);
+})();
+
+/* ---------- ניווט עם חשיפה הדרגתית ---------- */
 const S = [...document.querySelectorAll('.slide')]; let i = 0;
-function show(n) { i = Math.max(0, Math.min(n, S.length - 1)); S.forEach((s, k) => s.classList.toggle('on', k === i)); S[i].scrollTop = 0;
+const frags = n => [...S[n].querySelectorAll('.f')];
+function show(n, all) {
+  i = Math.max(0, Math.min(n, S.length - 1)); S.forEach((s, k) => s.classList.toggle('on', k === i)); S[i].scrollTop = 0;
+  frags(i).forEach(f => f.classList.toggle('in', !!all));
   document.getElementById('num').textContent = `${i + 1} / ${S.length}`; document.getElementById('bar').style.width = (i + 1) / S.length * 100 + '%';
-  document.getElementById('prev').disabled = !i; document.getElementById('next').disabled = i === S.length - 1; history.replaceState(null, '', '#' + (i + 1)) }
-document.getElementById('prev').onclick = () => show(i - 1); document.getElementById('next').onclick = () => show(i + 1);
-document.addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'PageDown' || e.key === ' ') show(i + 1); if (e.key === 'ArrowRight' || e.key === 'PageUp') show(i - 1) });
+  document.getElementById('prev').disabled = !i; history.replaceState(null, '', '#' + (i + 1));
+}
+function next() { const h = frags(i).find(f => !f.classList.contains('in')); if (h) { h.classList.add('in'); return } if (i < S.length - 1) show(i + 1) }
+function prev() { if (i > 0) show(i - 1, true) }
+document.getElementById('prev').onclick = prev; document.getElementById('next').onclick = next;
+document.addEventListener('keydown', e => { if (['ArrowLeft', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); next() } if (['ArrowRight', 'PageUp'].includes(e.key)) prev() });
 let x0 = null; document.addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
-document.addEventListener('touchend', e => { if (x0 === null) return; const d = e.changedTouches[0].clientX - x0; if (Math.abs(d) > 60) show(i + (d > 0 ? 1 : -1)); x0 = null });
-show((parseInt(location.hash.slice(1)) || 1) - 1);
-addEventListener('hashchange', () => { const n = (parseInt(location.hash.slice(1)) || 1) - 1; if (n !== i) show(n) });
+document.addEventListener('touchend', e => { if (x0 === null) return; const d = e.changedTouches[0].clientX - x0; if (Math.abs(d) > 60) d > 0 ? next() : prev(); x0 = null });
+document.getElementById('slides').addEventListener('click', e => { if (!e.target.closest('a,button,svg .hs')) next() });
+show((parseInt(location.hash.slice(1)) || 1) - 1, location.hash.length > 1);
+addEventListener('hashchange', () => { const n = (parseInt(location.hash.slice(1)) || 1) - 1; if (n !== i) show(n, true) });
 </script>
 </body>
 </html>
