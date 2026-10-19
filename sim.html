@@ -6,14 +6,15 @@
 <title>מסע המזון: סימולציה</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700;800&display=swap">
-<link rel="stylesheet" href="assets/farm.css?v=202610182235">
-<link rel="stylesheet" href="assets/digest.css?v=202610182235">
+<link rel="stylesheet" href="assets/farm.css?v=202610191411">
+<link rel="stylesheet" href="assets/digest.css?v=202610191411">
+<link rel="stylesheet" href="assets/lab-farm.css?v=202610191411">
 </head>
 <body>
 <div class="wrap">
   <header class="bar">
     <span class="brand">🌾 מסע המזון · סימולציה</span>
-    <a class="linkbtn" href="index.html?v=202610182235">→ לדף היחידה</a>
+    <a class="linkbtn" href="index.html?v=202610191411">→ לדף היחידה</a>
   </header>
   <nav class="cmap" id="cmap" aria-label="רצף היחידות"></nav>
 
@@ -39,11 +40,26 @@
     <div class="card panel" id="panel" aria-live="polite"></div>
   </div>
 
+  <section class="card" style="margin-top:14px">
+    <h3>⬇ דוח PDF של הסימולציה</h3>
+    <p class="hint">הדוח הוא לבעל החיים שבחרתם למעלה (אדם, עוף או פרה). בדוח מופיעים השם, התחנות שעברתם במצב חקירה, והתשובות שלכם במצב זיהוי בכתיבה, לצד התשובות הנכונות. אפשר להוריד דוח נפרד לכל בעל חיים.</p>
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <label>שם מלא <input class="numin" id="stName" autocomplete="name" style="width:180px"></label>
+      <label>כיתה <input class="numin" id="stClass" style="width:90px"></label>
+      <button class="dl" id="dl">⬇ הורדת דוח PDF: אדם</button>
+    </div>
+    <p class="hint" id="dlmsg"></p>
+  </section>
+
   <footer>מדעי החקלאות · יחידה 2: מערכת העיכול · האיורים סכמטיים ואינם בקנה מידה · היחידה מתבססת על חומרי מט״ח ומורחבת בחומרים נוספים.</footer>
 </div>
 
-<script src="assets/course.js?v=202610182235"></script>
-<script src="assets/digest.js?v=202610182235"></script>
+<div id="report"></div>
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="assets/pdf.js?v=202610191411"></script>
+<script src="assets/course.js?v=202610191411"></script>
+<script src="assets/digest.js?v=202610191411"></script>
 <script>
 const $ = id => document.getElementById(id);
 const NS = 'http://www.w3.org/2000/svg';
@@ -51,6 +67,7 @@ const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.f
 renderCourse($('cmap'), 2, '../');
 
 let A = 'human', M = 'explore', cur = 0;
+const SEEN = { human: new Set(), bird: new Set(), cow: new Set() }, DONE = { human: {}, bird: {}, cow: {} };
 
 function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e }
 
@@ -72,7 +89,7 @@ function draw() {
 
 /* ---------- חקירה ---------- */
 function showStation(i) {
-  const R = route(A); cur = Math.max(0, Math.min(i, R.length - 1)); const p = R[cur];
+  const R = route(A); cur = Math.max(0, Math.min(i, R.length - 1)); const p = R[cur]; SEEN[A].add(p.id);
   const b = $('bolus'); if (b) b.style.transform = `translate(${p.x - 15}px,${p.y - 15}px)`;
   const ra = document.getElementById('ruminArrow'); if (ra) ra.classList.toggle('on', !!p.special);
   mark(p.id === 'rumination' ? 'mouth' : p.id);
@@ -120,7 +137,7 @@ function mark(id) {
 /* ---------- זיהוי בכתיבה (משוב בלי ציון) ---------- */
 let idOrder = [], idSel = null, done = {};
 function startId() {
-  done = {}; idOrder = idParts(A).slice().sort((p, q) => p.y - q.y || p.x - q.x);
+  done = DONE[A]; idOrder = idParts(A).slice().sort((p, q) => p.y - q.y || p.x - q.x);
   idSel = idOrder[0].id; draw(); markId(); renderId();
 }
 function markId() {
@@ -142,7 +159,7 @@ function renderId() {
    ${n === idOrder.length ? '<p class="fb ok">🎉 עברתם על כל החלקים! נסו בעל חיים אחר, או חזרו למצב חקירה.</p>' : ''}
    <div class="row"><button class="btn ghost" id="restart">התחלה מחדש</button></div>`;
   $('figHint').textContent = 'לחיצה על מספר באיור בוחרת חלק. אפשר לענות בכל סדר.';
-  $('restart').onclick = startId;
+  $('restart').onclick = () => { DONE[A] = {}; startId() };
   if ($('nextP')) $('nextP').onclick = () => { const nx = idOrder.slice(i + 1).find(q => !done[q.id]) || idOrder[i + 1]; idSel = nx.id; markId(); renderId() };
   if (d) return;
   $('hintB').onclick = () => { $('idfb').innerHTML = `<p class="fb no">💡 ${hint(p)} השם מתחיל באות "${p.name[0]}".</p>` };
@@ -164,6 +181,36 @@ function hint(p) {
   return 'רמז: ' + (H[p.id] || '');
 }
 
+/* ---------- דוח PDF לכל בעל חיים ---------- */
+const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+function buildReport() {
+  const an = ANIMALS[A], parts = idParts(A).slice().sort((p, q) => p.y - q.y || p.x - q.x), D = DONE[A], R = route(A);
+  const ans = parts.filter(p => D[p.id]), ok = ans.filter(p => D[p.id].ok).length;
+  $('report').innerHTML = `<h1>סימולציה: מסע המזון · ${an.icon} ${an.name}</h1>
+   <p>שם: <b>${esc($('stName').value.trim())}</b> · כיתה: <b>${esc($('stClass').value.trim())}</b> · תאריך: ${new Date().toLocaleDateString('he-IL')}</p>
+   <h2 style="font-size:19px;margin:12px 0 4px">🔍 מצב חקירה</h2>
+   <p>עברו על <b>${R.filter(p => SEEN[A].has(p.id)).length}</b> מתוך <b>${R.length}</b> תחנות: ${R.map(p => (SEEN[A].has(p.id) ? '✔ ' : '☐ ') + p.name).join(' · ')}</p>
+   <h2 style="font-size:19px;margin:12px 0 4px">✍️ זיהוי בכתיבה</h2>
+   <p>ענו על <b>${ans.length}</b> מתוך <b>${parts.length}</b> חלקים. שם ותפקיד נכונים: <b>${ok}</b>${ans.length ? ` (${Math.round(ok / ans.length * 100)}%)` : ''}.</p>
+   ${parts.map((p, i) => { const d = D[p.id];
+     if (!d) return `<div class="rr"><b>${i + 1}. ${p.name}</b><span>לא נענה</span></div>`;
+     const okN = nameOk(A, p, d.name), okB = roleOk(A, p.id, d.nut);
+     return `<div class="rr" style="display:block"><b>${i + 1}. ${p.name}</b><br>
+      <span class="${okN ? 'y' : 'n'}">${okN ? '✔' : '✘'}</span> שם שנכתב: ${esc(d.name)}<br>
+      <span class="${okB ? 'y' : 'n'}">${okB ? '✔' : '✘'}</span> תפקיד שנכתב: ${esc(d.nut)}
+      ${okB ? '' : `<br><span style="color:#2E7D4F">התפקיד: ${ROLE[A][p.id][0]}</span>`}</div>` }).join('')}
+   <p style="margin-top:12px;color:#5C6F66;font-size:13px">מדעי החקלאות · יחידה 2: מערכת העיכול · סימולציה · שגיאות כתיב קלות אינן נחשבות טעות · היחידה מתבססת על חומרי מט״ח ומורחבת בחומרים נוספים.</p>`;
+}
+$('dl').onclick = async () => {
+  const nm = $('stName').value.trim();
+  if (!nm) { $('dlmsg').textContent = 'כתבו שם מלא וכיתה. הם יופיעו בדוח.'; $('stName').focus(); return }
+  const b = $('dl'), old = b.textContent; b.disabled = true; b.textContent = 'מכין קובץ…';
+  try { buildReport(); const r = $('report'); r.style.display = 'block';
+    await downloadPdf(r, `סימולציה-${ANIMALS[A].name}-${nm.replace(/[\\/:*?"<>|]/g, '')}.pdf`); $('dlmsg').textContent = 'הקובץ מוכן. שמרו אותו והעלו למשימה ב-Classroom.';
+  } catch (e) { $('dlmsg').textContent = 'ההורדה לא הצליחה. נסו שוב, או הדפיסו את הדף (Ctrl+P) ושמרו כ-PDF.' }
+  $('report').style.display = 'none'; b.disabled = false; b.textContent = old;
+};
+
 /* ---------- אירועים ---------- */
 $('fig').addEventListener('click', e => {
   const h = e.target.closest('.hs'); if (!h) return;
@@ -175,7 +222,7 @@ $('fig').addEventListener('click', e => {
 $('fig').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('.hs')) { e.preventDefault(); e.target.closest('.hs').dispatchEvent(new MouseEvent('click', { bubbles: true })) } });
 document.querySelectorAll('.animals button').forEach(b => b.onclick = () => { A = b.dataset.a; document.querySelectorAll('.animals button').forEach(x => x.setAttribute('aria-pressed', x === b)); go() });
 document.querySelectorAll('.modes button').forEach(b => b.onclick = () => { M = b.dataset.m; document.querySelectorAll('.modes button').forEach(x => x.setAttribute('aria-pressed', x === b)); go() });
-function go() { if (M === 'id') startId(); else { draw(); showStation(0) } }
+function go() { $('dl').textContent = '⬇ הורדת דוח PDF: ' + ANIMALS[A].name; if (M === 'id') startId(); else { draw(); showStation(0) } }
 const q = new URLSearchParams(location.search); if (ANIMALS[q.get('a')]) { A = q.get('a'); document.querySelectorAll('.animals button').forEach(x => x.setAttribute('aria-pressed', x.dataset.a === A)) }
 go();
 </script>
