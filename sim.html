@@ -6,15 +6,15 @@
 <title>מסע המזון: סימולציה</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700;800&display=swap">
-<link rel="stylesheet" href="assets/farm.css?v=202610210703">
-<link rel="stylesheet" href="assets/digest.css?v=202610210703">
-<link rel="stylesheet" href="assets/lab-farm.css?v=202610210703">
+<link rel="stylesheet" href="assets/farm.css?v=202610220938">
+<link rel="stylesheet" href="assets/digest.css?v=202610220938">
+<link rel="stylesheet" href="assets/lab-farm.css?v=202610220938">
 </head>
 <body>
 <div class="wrap">
   <header class="bar">
     <span class="brand">🌾 מסע המזון · סימולציה</span>
-    <a class="linkbtn" href="index.html?v=202610210703">→ לדף היחידה</a>
+    <a class="linkbtn" href="index.html?v=202610220938">→ לדף היחידה</a>
   </header>
   <nav class="cmap" id="cmap" aria-label="רצף היחידות"></nav>
 
@@ -51,15 +51,15 @@
     <p class="hint" id="dlmsg"></p>
   </section>
 
-  <footer>מדעי החקלאות · יחידה 2: מערכת העיכול · האיורים סכמטיים ואינם בקנה מידה · היחידה מתבססת על חומרי מט״ח ומורחבת בחומרים נוספים.</footer>
+  <footer>מדעי החקלאות · יחידה 2: מערכת העיכול · האיורים אינם בקנה מידה · היחידה מתבססת על חומרי מט״ח ומורחבת בחומרים נוספים.</footer>
 </div>
 
 <div id="report"></div>
 <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="assets/pdf.js?v=202610210703"></script>
-<script src="assets/course.js?v=202610210703"></script>
-<script src="assets/digest.js?v=202610210703"></script>
+<script src="assets/pdf.js?v=202610220938"></script>
+<script src="assets/course.js?v=202610220938"></script>
+<script src="assets/digest.js?v=202610220938"></script>
 <script>
 const $ = id => document.getElementById(id);
 const NS = 'http://www.w3.org/2000/svg';
@@ -71,17 +71,41 @@ const SEEN = { human: new Set(), bird: new Set(), cow: new Set() }, DONE = { hum
 
 function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e }
 
+// האיור: תמונה אמיתית (FIG ב-digest.js) ועליה נקודות לחיצות
+// מיקום חלק: נקודה בתמונה, או מקום בפס שמתחת לתמונה לחלק שלא מופיע בה
+function pos(p) {
+  const f = FIG[A], q = f.pts[p.id]; if (q) return { x: q[0], y: q[1], off: q[2] === 'off' };
+  const offs = ANIMALS[A].parts.filter(r => !f.pts[r.id] && !r.special), i = offs.indexOf(p);
+  return { x: f.w - f.w * (i + 1) / (offs.length + 1), y: f.h + f.strip * .46, off: true };
+}
+// סדר המספרים במצב זיהוי: לפי FIG.num, ואם אין, מלמעלה למטה
+const idSort = (p, q) => { const n = FIG[A].num; return n ? n[p.id] - n[q.id] : pos(p).y - pos(q).y || pos(q).x - pos(p).x };
+const inPic = p => { const q = FIG[A].pts[p.id]; return !!q && q[2] !== 'off' && !p.special };
 function draw() {
-  $('fig').innerHTML = SVG[A];
+  const f = FIG[A], k = f.k, strip = M === 'explore' && f.strip, H = f.h + (strip || 0);
+  $('fig').innerHTML = `<svg viewBox="0 0 ${f.w} ${H}" class="dg real" role="img" aria-label="${f.alt}"><image href="${f.src}" width="${f.w}" height="${f.h}"/></svg>`;
   const svg = $('fig').querySelector('svg');
   const defs = el('defs', {}, svg); const mk = el('marker', { id: 'arrowHead', viewBox: '0 0 10 10', refX: 6, refY: 5, markerWidth: 6, markerHeight: 6, orient: 'auto-start-reverse' }, defs);
   el('path', { d: 'M0 0 L10 5 L0 10 Z', fill: 'var(--accent)' }, mk);
+  (f.hide || []).forEach(([x, y, w, h]) => el('rect', { x, y, width: w, height: h, fill: '#fff' }, svg));
+  if (strip) {
+    el('rect', { y: f.h, width: f.w, height: f.strip, class: 'strip' }, svg);
+    const t = el('text', { x: f.w - 6 * k, y: f.h + 11 * k, class: 'striptxt', style: `font-size:${10 * k}px` }, svg); t.textContent = 'לא מופיעים בתמונה:';
+  }
+  // במצב זיהוי: התוויות שבתמונה מוסתרות
+  if (M === 'id') (f.mask || []).forEach(([x, y, w, h]) => {
+    el('rect', { x, y, width: w, height: h, rx: 4, class: 'msk' }, svg);
+    const t = el('text', { x: x + w / 2, y: y + h / 2, class: 'msktxt', style: `font-size:${Math.min(h * .7, 14 * k)}px` }, svg); t.textContent = '?';
+  });
+  if (f.rumin) el('path', { d: f.rumin, class: 'rumin', id: 'ruminArrow', style: `stroke-width:${3 * k}px` }, svg);
   const g = el('g', { id: 'hsg' }, svg);
   const parts = M === 'explore' ? ANIMALS[A].parts.filter(p => !p.special) : idOrder;
   parts.forEach((p, i) => {
-    const h = el('g', { class: 'hs', tabindex: 0, role: 'button', 'data-id': p.id, transform: `translate(${p.x} ${p.y})` }, g);
+    const o = pos(p);
+    const h = el('g', { class: 'hs' + (o.off ? ' off' : ''), tabindex: 0, role: 'button', 'data-id': p.id, transform: `translate(${o.x} ${o.y}) scale(${k})` }, g);
     el('circle', { r: 11 }, h);
     const t = el('text', {}, h); t.textContent = M === 'explore' ? (p.st || '+') : (i + 1);
+    if (o.off) { const n = el('text', { y: 15, class: 'offname' }, h); n.textContent = p.name.replace(/ \(.*\)/, '') }
     h.setAttribute('aria-label', M === 'explore' ? p.name : 'חלק מספר ' + (i + 1));
   });
   if (M === 'explore') { const b = el('g', { class: 'bolus', id: 'bolus' }, svg); el('circle', { r: 8 }, b) }
@@ -90,7 +114,7 @@ function draw() {
 /* ---------- חקירה ---------- */
 function showStation(i) {
   const R = route(A); cur = Math.max(0, Math.min(i, R.length - 1)); const p = R[cur]; SEEN[A].add(p.id);
-  const b = $('bolus'); if (b) b.style.transform = `translate(${p.x - 15}px,${p.y - 15}px)`;
+  const b = $('bolus'), o = pos(p), k = FIG[A].k; if (b) b.style.transform = `translate(${o.x - 15 * k}px,${o.y - 15 * k}px) scale(${k})`;
   const ra = document.getElementById('ruminArrow'); if (ra) ra.classList.toggle('on', !!p.special);
   mark(p.id === 'rumination' ? 'mouth' : p.id);
   secretions(A === 'human' && p.id === 'duodenum');
@@ -105,19 +129,18 @@ function showStation(i) {
    ${cur === R.length - 1 ? endNote() : ''}`;
   $('prev').onclick = () => showStation(cur - 1); $('next').onclick = () => showStation(cur + 1);
   $('panel').querySelectorAll('.track2 button').forEach(x => x.onclick = () => showStation(+x.dataset.k));
-  $('figHint').textContent = 'לחיצה על מספר באיור מעבירה לתחנה. "+" מסמן איבר נלווה: המזון אינו עובר בו, אבל הוא מפריש לצינור העיכול אנזימי עיכול או מרה.';
+  $('figHint').textContent = 'לחיצה על מספר באיור מעבירה לתחנה. "+" מסמן איבר נלווה: המזון אינו עובר בו, אבל הוא מפריש לצינור העיכול אנזימי עיכול או מרה.' + (FIG[A].strip ? ' חלקים שלא מופיעים בתמונה מסומנים בפס התחתון.' : '');
 }
 // תחנת התריסריון באדם: מרה מכיס המרה (ירוק) ומיץ לבלב (סגול) זורמים לתריסריון
 function secretions(on) {
-  const svg = $('fig').querySelector('svg'); const old = svg.querySelector('#secr'); if (old) old.remove(); if (!on) return;
-  const g = el('g', { id: 'secr' }, svg);
-  const P = [['M166 258 Q172 282 188 300', '#3f7a2a', 4], ['M250 300 L196 306', '#7b4fb8', 4]];
-  P.forEach(([d, c, w]) => {
-    el('path', { d, fill: 'none', stroke: c, 'stroke-width': w, 'stroke-dasharray': '3 3' }, g);
-    ['0s', '-1s'].forEach(b => { const dot = el('circle', { r: 5, fill: c, stroke: '#fff', 'stroke-width': 1.5 }, g); el('animateMotion', { dur: '2s', begin: b, repeatCount: 'indefinite', path: d }, dot) });
+  const svg = $('fig').querySelector('svg'); const old = svg.querySelector('#secr'); if (old) old.remove();
+  const f = FIG[A]; if (!on || !f.secr) return;
+  const g = el('g', { id: 'secr' }, svg), k = f.k;
+  f.secr.forEach(([d, c, nm, x, y]) => {
+    el('path', { d, fill: 'none', stroke: c, 'stroke-width': 4 * k, 'stroke-dasharray': `${3 * k} ${3 * k}` }, g);
+    ['0s', '-1s'].forEach(b => { const dot = el('circle', { r: 5 * k, fill: c, stroke: '#fff', 'stroke-width': 1.5 * k }, g); el('animateMotion', { dur: '2s', begin: b, repeatCount: 'indefinite', path: d }, dot) });
+    const t = el('text', { x, y, class: 'tagname', style: `fill:${c};font-size:${13 * k}px` }, g); t.textContent = nm;
   });
-  const t1 = el('text', { x: 120, y: 290, class: 'tagname', style: 'fill:#3f7a2a' }, g); t1.textContent = 'מרה';
-  const t2 = el('text', { x: 300, y: 318, class: 'tagname', style: 'fill:#7b4fb8' }, g); t2.textContent = 'מיץ לבלב';
 }
 function endNote() {
   const t = { human: 'באדם התאית אינה מתפרקת, כי לאדם אין צלולאז. היא יוצאת בצואה.', bird: 'בעוף הקורקבן מחליף את השיניים. רק מעט מהתאית מותסס, במעיים העיוורים.', cow: 'בפרה רוב התאית מתפרקת בכרס בעזרת המיקרואורגניזמים, והאנרגיה נספגת כחומצות שומן נדיפות. זה הפתרון לחידה מ"התזונאי של הרפת": איך פרה חיה מקש ושחת.' }[A];
@@ -137,7 +160,7 @@ function mark(id) {
 /* ---------- זיהוי בכתיבה (משוב בלי ציון) ---------- */
 let idOrder = [], idSel = null, done = {};
 function startId() {
-  done = DONE[A]; idOrder = idParts(A).slice().sort((p, q) => p.y - q.y || p.x - q.x);
+  done = DONE[A]; idOrder = idParts(A).filter(inPic).sort(idSort);
   idSel = idOrder[0].id; draw(); markId(); renderId();
 }
 function markId() {
@@ -178,13 +201,16 @@ function renderId() {
 }
 function hint(p) {
   const H = { mouth: 'הפה נמצא בראש, בתחילת המסלול.', beak: 'המקור בקצה הראש.', esophagus: 'צינור ארוך שיוצא מהפה.', stomach: 'נמצאת אחרי הוושט, מתחת לכבד.', duodenum: 'יוצא מהקיבה ויוצר קשת.', small: 'הצינור המפותל והארוך.', large: 'רחב יותר, ומוביל לפתח היציאה.', anus: 'בקצה המסלול.', liver: 'האיבר הגדול והכהה.', gall: 'קטן וירקרק, מתחת לכבד.', pancreas: 'צהבהב ומוארך.', crop: 'הרחבה בוושט, בבסיס הצוואר.', prov: 'קטנה ומוארכת, לפני הקורקבן.', gizzard: 'עגול ושרירי, ובתוכו חצץ.', ceca: 'שני שקים שיוצאים מאותה נקודה.', cloaca: 'הפתח בקצה הגוף.', rumen: 'המדור הגדול ביותר.', reticulum: 'הדופן דמוית חלת דבש.', omasum: 'בפנים קפלים כמו דפים.', abomasum: 'מוארכת, בתחתית הבטן.' };
-  return 'רמז: ' + (H[p.id] || '');
+  // רמזים לפי התמונה של בעל החיים
+  const HA = { cow: { esophagus: 'הצינור שמגיע מהפה ונכנס לקיבה, בצד ימין למעלה.', small: 'הצינור שיוצא מהקיבה, בצד שמאל למעלה.', reticulum: 'מדור קטן ועגול, ליד המקום שבו הוושט נכנס לקיבה.', omasum: 'מדור עגול, בין קיבת הכוסות לקיבה האמיתית.', abomasum: 'המדור המוארך שממנו המזון עובר למעי.', rumen: 'המדור הגדול ביותר, בצד שמאל.' },
+    bird: { esophagus: 'צינור שיוצא מהראש, לצד קנה הנשימה.', small: 'הצינור הארוך והמפותל, בצד ימין.', prov: 'קטנה ומוארכת, בין הזפק לקורקבן.' } };
+  return 'רמז: ' + ((HA[A] || {})[p.id] || H[p.id] || '');
 }
 
 /* ---------- דוח PDF לכל בעל חיים ---------- */
 const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 function buildReport() {
-  const an = ANIMALS[A], parts = idParts(A).slice().sort((p, q) => p.y - q.y || p.x - q.x), D = DONE[A], R = route(A);
+  const an = ANIMALS[A], parts = idParts(A).filter(inPic).sort(idSort), D = DONE[A], R = route(A);
   const ans = parts.filter(p => D[p.id]), ok = ans.filter(p => D[p.id].ok).length;
   $('report').innerHTML = `<h1>סימולציה: מסע המזון · ${an.icon} ${an.name}</h1>
    <p>שם: <b>${esc($('stName').value.trim())}</b> · כיתה: <b>${esc($('stClass').value.trim())}</b> · תאריך: ${new Date().toLocaleDateString('he-IL')}</p>
