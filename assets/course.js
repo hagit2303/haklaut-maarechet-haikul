@@ -9,9 +9,9 @@ const COURSE = [
 // base: '' בדף הבית, '../' בתוך תיקיית יחידה
 function renderCourse(el, cur, base = '') {
   base = 'https://hagit2303.github.io/haklaut/'; // עותק עצמאי: כל הקישורים לאתר הקורס
-  el.innerHTML = `<a class="stop" href="${base}index.html?v=202610252223" style="text-decoration:none">🏠 דף הבית</a>` + COURSE.map(u => {
+  el.innerHTML = `<a class="stop" href="${base}index.html?v=202610252234" style="text-decoration:none">🏠 דף הבית</a>` + COURSE.map(u => {
     const tag = `<span class="eartag"><span>${u.n}</span></span>`;
     if (u.n === cur) return `<span class="stop cur" aria-current="page">${tag}${u.t}</span>`;
-    return u.url ? `<a class="stop done" href="${base}${u.url}?v=202610252223" style="text-decoration:none">${tag}${u.t}</a>` : `<span class="stop" style="opacity:.5">${tag}${u.t} · בקרוב</span>`;
+    return u.url ? `<a class="stop done" href="${base}${u.url}?v=202610252234" style="text-decoration:none">${tag}${u.t}</a>` : `<span class="stop" style="opacity:.5">${tag}${u.t} · בקרוב</span>`;
   }).join('');
 }
