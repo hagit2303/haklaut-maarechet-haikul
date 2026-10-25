@@ -45,7 +45,7 @@ SVG.cow = `<svg viewBox="0 0 640 380" class="dg" role="img" aria-label="מערכ
 <path d="M156 122 L98 98 Q58 92 46 128 L40 166 Q46 188 72 184 L156 172 Z" class="body"/>
 <path d="M92 96 L84 70 M108 102 L118 76" class="leg"/><circle cx="78" cy="122" r="4" class="eye"/>
 <path d="M196 302 L196 362 M246 302 L246 362 M500 302 L500 362 M548 302 L548 362" class="leg"/>
-<path d="M300 104 Q190 52 74 150" class="rumin" id="ruminArrow"/>
+<path d="M262 152 Q258 127 242 127 L162 131 Q120 141 76 151" class="rumin" id="ruminArrow"/>
 <path d="M74 160 Q120 150 162 140 L242 136 Q254 136 257 150" class="tube" data-o="esophagus"/>
 <path d="M252 120 Q322 92 412 100 Q472 112 472 176 Q470 246 402 256 Q332 262 282 240 Q246 220 252 120 Z" class="rumen" data-o="rumen"/>
 <g class="pap"><circle cx="310" cy="150" r="2"/><circle cx="350" cy="130" r="2"/><circle cx="400" cy="140" r="2"/><circle cx="430" cy="180" r="2"/><circle cx="380" cy="200" r="2"/><circle cx="330" cy="210" r="2"/><circle cx="300" cy="185" r="2"/><circle cx="420" cy="225" r="2"/></g>
@@ -326,5 +326,5 @@ const FIG = {
     // המספרים שבאיור המקורי מוסתרים; במצב זיהוי המספור הוא כמו בבגרות: 1 קיבה אמיתית ... 5 ושט, 6 כרס
     hide: [[254, 6, 26, 30], [762, 6, 26, 30], [822, 246, 28, 32], [822, 326, 28, 32], [822, 411, 28, 32]],
     num: { abomasum: 1, omasum: 2, reticulum: 3, small: 4, esophagus: 5, rumen: 6 },
-    rumin: 'M738 236 Q690 170 772 112 Q860 72 884 122' }
+    rumin: 'M732 236 Q684 190 692 152 Q718 112 770 92 L830 74 L920 64' }
 };
