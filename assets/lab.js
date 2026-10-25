@@ -80,7 +80,7 @@ function fr(x) { for (let d = 1; d <= 64; d++) { const n = Math.round(x * d); if
 function parseFrac(s) { s = (s || '').replace(',', '.').replace(/\s/g, ''); if (!s) return NaN; if (s.endsWith('%')) return parseFloat(s) / 100; if (s.includes('/')) { const [a, b] = s.split('/').map(Number); return b ? a / b : NaN } return Number(s) }
 
 /* ---------- התאמת מושגים ---------- */
-function renderMatch(box, pairs, btn, out) {
+function renderMatch(box, pairs, btn, out, title = 'התאמת מושגים') {
   const terms = shuffle(pairs.map(p => p[0]).slice());
   box.innerHTML = shuffle(pairs.map((p, i) => [p, i])).map(([p, i]) => `<span>${p[1]}</span><select data-i="${i}" aria-label="המושג המתאים"><option value="">בחרו מושג</option>${terms.map(t => `<option>${t}</option>`).join('')}</select>`).join('');
   btn.onclick = () => {
@@ -90,7 +90,7 @@ function renderMatch(box, pairs, btn, out) {
     sels.forEach(s => { const want = pairs[+s.dataset.i][0], g = s.value === want; s.className = g ? 'm-ok' : 'm-no'; s.disabled = true; if (g) ok++; else { wrong.push(`${s.value} ← ${want}`); s.insertAdjacentHTML('afterend', `<span class="ri" style="grid-column:1/-1">✘ הנכון: <b>${want}</b></span>`) } });
     btn.disabled = true;
     fb(out, ok === pairs.length, ok === pairs.length ? `מצוין! כל ${ok} המושגים במקום.` : `${ok} מתוך ${pairs.length} נכונים. ליד כל טעות כתוב המושג הנכון.`);
-    Lab.rec('התאמת מושגים', ok === pairs.length, `${ok}/${pairs.length}`, wrong.join(' · '), '');
+    Lab.rec(title, ok === pairs.length, `${ok}/${pairs.length}`, wrong.join(' · '), '');
   };
 }
 
@@ -102,7 +102,7 @@ function buildReport(title) {
    <p style="font-size:18px;margin:8px 0">נכון בניסיון הראשון: <b>${ok}</b> מתוך <b>${rows.length}</b>${rows.length ? ` (${Math.round(ok / rows.length * 100)}%)` : ''}</p>
    ${rows.map(([t, r]) => `<div class="rr"><b>${t}</b><span class="${r.ok ? 'y' : 'n'}">${r.ok ? '✔' : '✘'}</span><span>ענה: ${r.d}${!r.ok && r.right ? `<br><span style="color:#2E7D4F">הנכון: ${r.right}</span>` : ''}</span></div>`).join('')}
    ${bad.length ? `<h2 style="font-size:20px;margin-top:16px">📒 דף הטעויות שלי</h2>${bad.map(([t, r]) => `<div class="rr" style="display:block"><b>${t}</b><br>ענה: ${r.d}<br>${r.right ? `<span style="color:#2E7D4F">הנכון: ${r.right}</span><br>` : ''}${r.why ? `<span style="color:#5C6F66">${r.why}</span>` : ''}</div>`).join('')}` : ''}
-   <p style="margin-top:12px;color:#5C6F66;font-size:13px">מדעי החקלאות · מערכת העיכול · תרגול · נרשם הניסיון הראשון בכל שאלה</p>`;
+   <p style="margin-top:12px;color:#5C6F66;font-size:13px">מדעי החקלאות · ${title} · נרשם הניסיון הראשון בכל שאלה</p>`;
 }
 async function labPdf(title, file) {
   const b = $('dl'), old = b.textContent; b.disabled = true; b.textContent = 'מכין קובץ…';
